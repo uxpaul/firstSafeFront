@@ -1,0 +1,27 @@
+<ion-view view-title="Modal">
+    <ion-content id="markermodal">
+        <div class="list card">
+            <div class="item item-avatar">
+                <img src="#">
+                <h2>{{$ctrl.user.prenom}} {{$ctrl.user.nom}}</h2>
+                <p> Plustôt douce  </p>
+            </div>
+
+            <div class="item item-image">
+                <img ng-src="{{$ctrl.user.image}}">
+            </div>
+
+            <div class="row">
+                <div class="col col-50">
+                    <button ui-sref="tab.home" ng-click="$ctrl.calculateDistances()" class="button ion-left ion-pinpoint button-calm assertive"> SHARK </button>
+                </div>
+                <div>
+                    <div class="col">
+                        <button ui-sref="tab.home" class="button ion-left ion-heart-broken button-calm"> NO - SHARK </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,35 @@
+[{
+    "id": "1",
+    "nom": "KARENBEU",
+    "prenom": "Joséphine",
+    "pseudo": "jack",
+    "niveau": "1",
+    "points": "3500",
+    "address": "70 RUE HENRI IV, 33000 BORDEAUX, FRANCE",
+    "tel": "07 81 60 70 80",
+    "image": "img/rescue.png",
+    "lat": 44.834854,
+    "lng": -0.572909
+}, {
+
+    "id": "2",
+    "nom": "de LA VEGA",
+    "prenom": "Alberta",
+    "pseudo": "GodFromMars",
+    "address": "25 RUE MARCEL ISSARTIER, 33700 MERIGNAC",
+    "tel": "05 81 60 70 70",
+    "image": "img/rescue.png",
+    "lat": 44.831354,
+    "lng": -0.572802
+}, {
+    "id": "3",
+    "nom": "Mernar",
+    "prenom": "Juliette",
+    "address": "25 RUE MARCEL ISSARTIER, 33700 MERIGNAC",
+    "tel": "",
+    "pseudo": "tomtom",
+    "image": "img/elisa.png",
+    "lat": 48.8388763,
+    "lng": 2.5435062000000244
+
+}]
