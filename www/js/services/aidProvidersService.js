@@ -5,6 +5,9 @@
         get() {
             return $http.get(apiConfig.baseUrl + '/api/providers')
         },
+        get(id){
+          return $ctrl.get(apiConfig.baseUrl +'api/providers/'+ id)
+        },
         add(newArticle) {
             return $http.post(apiConfig.baseUrl + '/api/providers', newArticle)
         },

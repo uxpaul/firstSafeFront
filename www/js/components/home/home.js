@@ -2,38 +2,29 @@
 
   app.component('home', {
     templateUrl: 'js/components/home/home.html',
-    controller: ["$state", "$compile", "$scope", "$http","aidProvidersService","$stateParams", "apiConfig", function($state, $compile, $scope, $http, aidProvidersService, $stateParams, apiConfig) {
-
-   let socket = io(apiConfig.baseUrl + '/iller');
+    controller: ["aidReceiversService", "usersService", "$state", "$compile", "$scope", "$http", "$stateParams", "apiConfig", function(aidReceiversService, usersService, $state, $compile, $scope, $http, $stateParams, apiConfig) {
+      let identification = "584a2d959c4d490e50b0478e" + "58497190c833f097d5872e8e"
+      let prov = "584a2de49c4d490e50b04791"
+      let socket = io(apiConfig.baseUrl + '/iller');
       this.show;
       this.reply;
+
+      socket.on('stats', (data) => console.log('Connected clients:', data.numClients))
+
       // Test
       socket.on('hi', (message) => console.log(message))
-      // Uniquement le(s) medecin(s) reçoit le(s) message(s) de secours
+        // Uniquement le(s) medecin(s) reçoit le(s) message(s) de secours
       socket.on('emergency', (message) => this.emergency(message))
-      // A la confirmation du medecin ...
-      socket.on('accept', (user)=> this.acceptHelp(user))
+        // A la confirmation du medecin ...
+      socket.on('accept', (user) => this.acceptHelp(user))
 
-      socket.on('stats', (data) => {
-          console.log('Connected clients:', data.numClients);
-      });
-
-
-            aidProvidersService.get().then((res) => {
-                this.user = res.data
-                console.log(this.user)
-                debugger
-                socket.emit('user', this.user[0])
-
-                if (this.user[0].profession === "iller") {
-                    //  socket = io('/iller');
-                    this.show = true;
-
-                }
-                //  else {
-                //     socket = io('/Doctor');
-                // }
-            })
+      usersService.getPopulate($stateParams).then((res) => {
+        this.user = res.data
+        socket.emit('user', this.user.situation)
+        if (this.user.situation === "aidReceiver") {
+          this.show = true;
+        }
+      })
 
 
 
@@ -128,12 +119,19 @@
 
             this.markers(map)
             directionsDisplay.setMap(map);
-          }
 
+          }
           function onError(error) {
             console.log("Could not get location");
           };
 
+
+          // Save new user's location
+          // user.lat = position.coords.latitude
+          // user.long = position.coords.longitude
+          // aidReceiversService.edit(user).then((res) => {
+          //   this.update = res.data
+          // })
 
           // Get current position
           navigator.geolocation.getCurrentPosition(onSuccess, onError);
@@ -142,7 +140,7 @@
 
         // Create markers
         markers(map) {
-          $http.get('users.json').then((res) => {
+          aidReceiversService.get().then((res) => {
             this.users = res.data.forEach((user) => {
 
               let latLng = new google.maps.LatLng(user.lat, user.lng);
@@ -159,9 +157,7 @@
                 icon: icon
               });
 
-              // Save new user's location
-              this.sharkers.push(user)
-                // Declare here, to close the marker when I click on an other
+              // Declare here, to close the marker when I click on an other
               this.infoWindow = new google.maps.InfoWindow();
               this.windows(marker, user)
             })
@@ -189,37 +185,39 @@
 
         },
         // J'envoie le secours
-                help() {
-                    socket.emit('emergency', this.user);
-                },
+        help() {
+          socket.emit('emergency', this.user);
+        },
 
-                emergency(message) {
-                    $scope.$apply(() => {
-                        this.content = message.user[0]
-                        this.id = message.id
-                        console.log(message.id)
-                        this.reply = true;
-                    });
-                },
+        emergency(message) {
+          $scope.$apply(() => {
+            this.content = message.user[0]
+            this.id = message.id
+            console.log(message.id)
+            this.reply = true;
+          });
+        },
 
-                // Le medecin envoie son acceptation
-                accept(){
+        // Le medecin envoie son acceptation
+        accept() {
+          this.reply = false;
+          socket.emit('accept', {
+            user: this.user,
+            id: this.id
+          });
+        },
 
-                  socket.emit('accept',{user : this.user, id : this.id});
-                },
-
-                refuse(){
+        refuse() {
 
 
-                },
+        },
 
-                // ... Je reçoit ses coordonnées
-                acceptHelp(user){
-                  debugger
-                  $scope.$apply(() => {
-                      this.doctor = user[0].name
-                  });
-                }
+        // ... Je reçoit ses coordonnées
+        acceptHelp(user) {
+          $scope.$apply(() => {
+            this.doctor = user
+          });
+        }
 
 
       })

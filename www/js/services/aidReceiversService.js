@@ -1,6 +1,6 @@
 ((app) => {
     'use strict'
-    app.service('aidReceiversService', function($http) {
+    app.service('aidReceiversService', function($http, apiConfig) {
     return {
         get() {
             return $http.get(apiConfig.baseUrl + '/api/receivers')

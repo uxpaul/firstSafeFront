@@ -2,7 +2,7 @@
 
   app.config(['$stateProvider', ($stateProvider)=>{
     $stateProvider.state('app.home', {
-      url: '/home',
+      url: '/home/:id',
       views: {
         'menuContent': {
           template: '<home></home>'

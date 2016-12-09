@@ -1,6 +1,7 @@
 ((app) => {
   app.constant('apiConfig', {
-    baseUrl:'http://localhost:8000'
+    // baseUrl:'http://localhost:8000'
+     baseUrl: 'https://firstsafe.herokuapp.com/api/users'
   })
   .run(function($ionicPlatform) {
       $ionicPlatform.ready(function() {
@@ -19,8 +20,8 @@
     })
 
 })(angular.module('app', [
-  'btford.socket-io',
   'ionic',
+  'btford.socket-io',
   'ngCordova',
   'app.services',
   'app.home',

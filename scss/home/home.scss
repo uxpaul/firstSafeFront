@@ -33,3 +33,23 @@
     width: 100%;
     margin: -5px;
 }
+
+.floating-button {
+  position: absolute;
+  top: 10px;
+  z-index: 5;
+  margin : 83vh 25vh;
+  font-family: 'Roboto','sans-serif';
+}
+.refuse-button {
+  position: absolute;
+  top: 10px;
+  margin : 83vh 38vh;
+}
+.floating-text {
+  position: absolute;
+  top: 10px;
+  z-index: 9999999;
+  margin : 83vh 25vh;
+  font-family: 'Roboto','sans-serif';
+}

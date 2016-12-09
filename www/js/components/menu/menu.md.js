@@ -1,8 +1,8 @@
-((app)=>{
+((app) => {
 
   app.component('menu', {
-    templateUrl:'js/components/menu/menu.html',
-    controller:['$scope','$ionicModal','$timeout', function($scope, $ionicModal, $timeout){
+    templateUrl: 'js/components/menu/menu.html',
+    controller: ['$scope', '$ionicModal', '$timeout','$state', function($scope, $ionicModal, $timeout, $state) {
 
       // With the new view caching in Ionic, Controllers are only called
       // when they are recreated or on app start, instead of every page change.
@@ -12,7 +12,8 @@
       //});
 
       // Form data for the login modal
-      $scope.loginData = {};
+      this.loginData = {};
+
 
       // Create the login modal that we will use later
       $ionicModal.fromTemplateUrl('js/components/login/login.html', {
@@ -32,11 +33,16 @@
       };
 
       // Perform the login action when the user submits the login form
-      $scope.doLogin = function() {
-        console.log('Doing login', $scope.loginData);
+      this.doLogin = () => {
+        console.log('Doing login', this.loginData);
 
-        // Simulate a login delay. Remove this and replace with your login
-        // code if using a login system
+
+        $state.go('app.home', {
+          id: this.loginData.username
+        })
+
+          // Simulate a login delay. Remove this and replace with your login
+          // code if using a login system
         $timeout(function() {
           $scope.closeLogin();
         }, 1000);
