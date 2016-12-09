@@ -48,8 +48,22 @@
 }
 .floating-text {
   position: absolute;
-  top: 10px;
+  top: 9px;
   z-index: 9999999;
-  margin : 83vh 25vh;
+  margin : 0vh 19vh;
   font-family: 'Roboto','sans-serif';
+  background-color: #FFFFFF;
+  border-radius: 0.5em;
+  width: 17em;
+  padding: 1em 1em;
+}
+.bar-stable {
+
+position: fixed;
+z-index: 10;
+background-image: url("/img/rescue.png") !important;
+background-position: center !important;
+background-size: contain !important;
+background-repeat: no-repeat !important;
+width: 100%;
 }

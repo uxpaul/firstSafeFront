@@ -2,7 +2,7 @@
 
   app.config(['$stateProvider', ($stateProvider)=>{
     $stateProvider.state('app.login', {
-      url:'/home/{userID}',
+      url:'/login/{userID}',
       views: {
         'menuContent': {
           template:'<login></login>'

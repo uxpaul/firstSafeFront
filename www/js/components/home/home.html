@@ -3,16 +3,19 @@
 
 
     <ion-content scroll="true">
-      <div id="results"></div>
+      <div class="floating-text" id="results" ></div>
       <div id="map" data-tap-disabled="true"></div>
       <div ng-if="$ctrl.show">
-        <button  class="button button-assertive floating-button"  ng-click="$ctrl.help()">  HELP </button>
-  </div>
-  <button class="button button-positive floating-button" ng-if="$ctrl.reply" ng-click="$ctrl.accept()"> Accept</button>
-  <button class="button button-primary refuse-button" ng-if="$ctrl.reply" ng-click="$ctrl.refuse()"> Refuse</button>
-
-  <p ng-if="$ctrl.doctor" class="floating-text"> {{$ctrl.doctor.nom}} accept your help</p>
-
+        <button class="button button-assertive floating-button" ng-click="$ctrl.help()">  HELP </button>
+      </div>
+      <button class="button button-positive floating-button" ng-if="$ctrl.reply" ng-click="$ctrl.accept()"> Accept</button>
+      <button class="button button-primary refuse-button" ng-if="$ctrl.reply" ng-click="$ctrl.refuse()"> Refuse</button>
+      <div class="floating-text" ng-if="$ctrl.doctor">
+        <p> {{$ctrl.doctor.nom}} accept your help</p>
+      </div>
+      <div class="floating-text" ng-if="$ctrl.reply" >
+        <p>{{$ctrl.content.prenom}} {{$ctrl.content.nom}} need your help.</p>
+      </div>
     </ion-content>
   </ion-content>
 </ion-view>
