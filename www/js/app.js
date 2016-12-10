@@ -1,7 +1,7 @@
 ((app) => {
   app.constant('apiConfig', {
-    baseUrl:'http://localhost:8000'
-      //baseUrl: 'https://firstsafe.herokuapp.com'
+    //baseUrl:'http://localhost:8000'
+      baseUrl: 'https://firstsafe.herokuapp.com'
   })
   .run(function($ionicPlatform) {
       $ionicPlatform.ready(function() {
@@ -27,7 +27,8 @@
   'app.home',
   'app.login',
   'app.menu',
-  'app.marker'
+  'app.marker',
+  'app.signup'
 
 
 ]))
