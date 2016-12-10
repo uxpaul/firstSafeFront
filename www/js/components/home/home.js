@@ -20,7 +20,7 @@
         })
         // A la confirmation du medecin ...
       socket.on('accept', (newLocation) => {
-        debugger
+        this.show = false
         newLocation.user.lat
         newLocation.user.lng
         this.calculateDistances(newLocation.user)
@@ -95,7 +95,7 @@
             service.getDistanceMatrix({
               origins: [origin], //array of origins
               destinations: destinations, //array of destinations
-              travelMode: google.maps.TravelMode.DRIVING,
+              travelMode: google.maps.TravelMode.WALKING,
               unitSystem: google.maps.UnitSystem.METRIC,
               avoidHighways: false,
               avoidTolls: false
@@ -114,7 +114,7 @@
                 let request = {
                   origin: origin,
                   destination: destinations[0],
-                  travelMode: google.maps.TravelMode.DRIVING
+                  travelMode: google.maps.TravelMode.WALKING
                 };
 
                 // Display route in blue line

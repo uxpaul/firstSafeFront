@@ -2,9 +2,9 @@
 
   app.component('login', {
     templateUrl: 'js/components/login/login.html',
-    controller: ["$ionicModal","$scope", "$state", function( $ionicModal, $scope,$state) {
+    controller: ["$ionicModal", "$scope", "$state", "usersService", function($ionicModal, $scope, $state, usersService) {
 
-
+      this.closeSignup = false;
       // Create the signup modal that we will use later
       $ionicModal.fromTemplateUrl('js/components/signup/signup.html', {
         scope: $scope
@@ -34,7 +34,14 @@
             id: this.loginData.nom
           })
 
-         }
+        },
+        doSignup(newUser) {
+          usersService.add(newUser).then((res) => {
+           this.newUser = res.data
+           console.log(this.newUser)
+          })
+          this.close = true
+        }
 
 
       })
