@@ -9885,11 +9885,13 @@ a.button {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out; }
 
+.signup {
+  padding: 1em 0em 0 3em !important; }
+
 .signupInput {
-  margin: 3em 3em 3em 3em !important;
+  margin: 1em 0em 0 3em !important;
   border: none;
   text-align: center;
-  padding: 10px 0;
   border-bottom: solid 1px #387ef5;
   -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
   transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
@@ -9916,16 +9918,16 @@ a.button {
   text-align: center;
   margin: 2em; }
 
-h1, input::-webkit-input-placeholder, button {
+h1, .loginInput::-webkit-.loginInput-placeholder, button {
   font-family: 'roboto', sans-serif;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out; }
 
-form {
+.form {
   margin: 171px 5em 0;
   text-align: center; }
 
-input {
+.loginInput {
   margin: 3em 3em 3em 3em !important;
   border: none;
   text-align: center;
@@ -9940,12 +9942,12 @@ input {
   background-repeat: no-repeat;
   color: #0e6252; }
 
-input:focus, input:valid {
+.loginInput:focus, .loginInput:valid {
   box-shadow: none;
   outline: none;
   background-position: 0 0; }
 
-input:focus::-webkit-input-placeholder, input:valid::-webkit-input-placeholder {
+.loginInput:focus::-webkit-.loginInput-placeholder, .loginInput:valid::-webkit-.loginInput-placeholder {
   color: #387ef5;
   -webkit-transform: translateY(-20px);
   transform: translateY(-20px);

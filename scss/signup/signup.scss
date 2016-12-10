@@ -3,13 +3,14 @@
   -webkit-transition: all 0.3s ease-in-out;
           transition: all 0.3s ease-in-out;
 }
+.signup {
+  padding:1em 0em 0 3em !important;
 
+}
 .signupInput {
-  margin: 3em 3em 3em 3em !important;
+  margin:1em 0em 0 3em !important;
   border: none;
   text-align: center;
-
-  padding: 10px 0;
   border-bottom: solid 1px rgb(56, 126, 245);
   -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
           transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);

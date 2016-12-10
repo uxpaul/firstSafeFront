@@ -2,8 +2,8 @@
   <ion-content>
     <form ng-submit="$ctrl.doLogin()">
       <div class="form">
-          <input type="text" ng-model="$ctrl.loginData.nom" placeholder="Username">
-          <input type="password" ng-model="$ctrl.loginData.password" placeholder="Password" >
+          <input type="text" ng-model="$ctrl.loginData.nom" placeholder="Username" class="loginInput">
+          <input type="password" ng-model="$ctrl.loginData.password" placeholder="Password" class="loginInput" >
           <button class="button button-clear button-positive" type="submit">Sign in</button>
       </div>
     </form>

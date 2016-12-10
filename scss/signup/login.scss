@@ -1,15 +1,15 @@
-h1, input::-webkit-input-placeholder, button {
+h1, .loginInput::-webkit-.loginInput-placeholder, button {
   font-family: 'roboto', sans-serif;
   -webkit-transition: all 0.3s ease-in-out;
           transition: all 0.3s ease-in-out;
 }
-form {
+.form {
   margin: 171px 5em 0;
   text-align: center;
 
 
 }
-input {
+.loginInput {
   margin: 3em 3em 3em 3em !important;
   border: none;
   text-align: center;
@@ -25,12 +25,12 @@ input {
   background-repeat: no-repeat;
   color: #0e6252;
 }
-input:focus, input:valid {
+.loginInput:focus, .loginInput:valid {
   box-shadow: none;
   outline: none;
   background-position: 0 0;
 }
-input:focus::-webkit-input-placeholder, input:valid::-webkit-input-placeholder {
+.loginInput:focus::-webkit-.loginInput-placeholder, .loginInput:valid::-webkit-.loginInput-placeholder {
   color: rgb(56, 126, 245);
   //font-size: 11px;
   -webkit-transform: translateY(-20px);
