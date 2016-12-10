@@ -24,7 +24,7 @@
         newLocation.user.lat
         newLocation.user.lng
         this.calculateDistances(newLocation.user)
-        this.acceptHelp(user)
+        this.acceptHelp(newLocation)
 
       })
 
