@@ -1,69 +1,79 @@
 #map {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .scroll {
-    height: 100%;
+  height: 100%;
 }
 
 .marker {
-    border-radius: 30px;
+  border-radius: 30px;
 }
 
 .markerContent {
-    border-radius: 100em;
-    height: 50px;
-    width: 50px;
-    position: sticky;
-    /*border-top: 0.063em solid #ccc;*/
+  border-radius: 100em;
+  height: 50px;
+  width: 50px;
+  position: sticky;
+  /*border-top: 0.063em solid #ccc;*/
 }
+
 #margin {
   padding-top: 3em;
 }
+
 #logo {
-    max-height: 40px;
-    position: fixed;
-    z-index: 10;
-    background-image: url("/img/sharker.png");
-    background-position: center;
-    height: 40px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 100%;
-    margin: -5px;
+  max-height: 40px;
+  position: fixed;
+  z-index: 10;
+  background-image: url("/img/sharker.png");
+  background-position: center;
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  margin: -5px;
 }
 
 .floating-button {
   position: absolute;
   top: 10px;
   z-index: 5;
-  margin : 83vh 25vh;
+  margin: 83vh 25vh;
   font-family: 'Roboto','sans-serif';
 }
+
 .refuse-button {
   position: absolute;
   top: 10px;
-  margin : 83vh 38vh;
+  margin: 83vh 38vh;
 }
+
 .floating-text {
   position: absolute;
   top: 9px;
   z-index: 9999999;
-  margin : 0vh 19vh;
+  margin: 0 19vh;
   font-family: 'Roboto','sans-serif';
   background-color: #FFFFFF;
   border-radius: 0.5em;
   width: 17em;
-  padding: 1em 1em;
+  padding: 1em;
 }
-.bar-stable {
 
-position: fixed;
-z-index: 10;
-background-image: url("/img/rescue.png") !important;
-background-position: center !important;
-background-size: contain !important;
-background-repeat: no-repeat !important;
-width: 100%;
+// .bar-stable {
+//   position: fixed;
+//   z-index: 10;
+//   background-image: url("/img/rescue.png") !important;
+//   background-position: center !important;
+//   background-size: contain !important;
+//   background-repeat: no-repeat !important;
+//   width: 100%;
+// }
+
+
+.avatar img {
+  height: 10em;
+  margin: auto 43px;
 }

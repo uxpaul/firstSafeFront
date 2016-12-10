@@ -2,27 +2,24 @@
 
   app.component('home', {
     templateUrl: 'js/components/home/home.html',
-    controller: ["aidReceiversService", "usersService", "$compile", "$scope", "$http", "$stateParams", "apiConfig", function(aidReceiversService, usersService, $compile, $scope, $http, $stateParams, apiConfig) {
-      let identification = "584a2d959c4d490e50b0478e" + "58497190c833f097d5872e8e"
-      let prov = "584a2de49c4d490e50b04791"
+    controller: ["aidReceiversService", "usersService", "$compile", "$scope", "$http", "$stateParams", "apiConfig", "$ionicActionSheet", "$ionicPopup", function(aidReceiversService, usersService, $compile, $scope, $http, $stateParams, apiConfig, $ionicActionSheet, $ionicPopup) {
+
       let socket = io(apiConfig.baseUrl + '/iller');
       this.show;
       this.reply;
       socket.on('stats', (data) => console.log('Connected clients:', data.numClients))
 
-      // Test
-      socket.on('hi', (message) => console.log(message))
-        // Uniquement le(s) medecin(s) reçoit le(s) message(s) de secours
-      socket.on('emergency', (message) => {
-        debugger
-        message.user.lat
-        message.user.lng
-        this.calculateDistances(message.user)
-        this.emergency(message)
-      })
-        // A la confirmation du medecin ...
-      socket.on('accept',(user) => {
 
+      // Uniquement le(s) medecin(s) reçoit le(s) message(s) de secours
+      socket.on('emergency', (message) => {
+          //this.show = false;
+          message.user.lat
+          message.user.lng
+          this.calculateDistances(message.user)
+          this.emergency(message)
+        })
+        // A la confirmation du medecin ...
+      socket.on('accept', (user) => {
         user.lat
         user.lng
         this.calculateDistances(user)
@@ -37,7 +34,37 @@
 
       })
 
+      $scope.show = () => {
 
+        // Show the action sheet
+        let hideSheet = $ionicActionSheet.show({
+          buttons: [{
+            text: 'Gun Shot'
+          }, {
+            text: 'Heart Attack'
+          }, {
+            text: 'Stabbing'
+          }, {
+            text: 'Other'
+          }],
+
+          titleText: 'Emergency Type',
+          cancelText: 'Cancel',
+          cancel: () => {
+            // add cancel code..
+          },
+          buttonClicked: (index, emergencyType) => {
+            this.help(emergencyType)
+              // An alert dialog
+            $ionicPopup.alert({
+              title: 'Message sent',
+              template: 'Someone is on the road. Until he arrives, please call the 107. '
+            });
+            return true;
+          }
+        });
+
+      };
 
       angular.extend(this, {
         $onInit() {
@@ -56,6 +83,11 @@
           let directionsService = new google.maps.DirectionsService();
           let directionsDisplay = new google.maps.DirectionsRenderer();
           let geocoder = new google.maps.Geocoder();
+
+
+
+
+
 
           this.calculateDistances = (destination) => {
             destinations = [destination]
@@ -78,7 +110,7 @@
 
                 document.getElementById("results").innerHTML = resultText;
 
-                  //map the route
+                //map the route
                 let request = {
                   origin: origin,
                   destination: destinations[0],
@@ -130,16 +162,16 @@
 
             this.markers(map)
             directionsDisplay.setMap(map);
-          //  debugger
+            //  debugger
           }
 
-          let onError = (error)=> {
+          let onError = (error) => {
             console.log("Could not get location");
           };
 
           // Get current position
           navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
-          navigator.geolocation.watchPosition(onSuccess, onError, options);
+          //  navigator.geolocation.watchPosition(onSuccess, onError, options);
 
         },
 
@@ -174,7 +206,6 @@
 
           // Enregistrement de la position du marker
           let destination = marker.position
-          console.log(marker.position)
           let contentString = `<div>
                         <b> ${user.prenom} </b>
                         </br>
@@ -194,7 +225,8 @@
 
         },
         // aidReceiver le secours
-        help() {
+        help(emergencyType) {
+          this.user.message = emergencyType.text
           socket.emit('emergency', this.user);
         },
 

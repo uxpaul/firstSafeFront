@@ -1,4 +1,4 @@
-<ion-view view-title="Map">
+<ion-view view-title="FIRST SAFE">
   <ion-content id="margin" has-header="true">
 
 
@@ -6,7 +6,7 @@
       <div class="floating-text" id="results" ></div>
       <div id="map" data-tap-disabled="true"></div>
       <div ng-if="$ctrl.show">
-        <button class="button button-assertive floating-button" ng-click="$ctrl.help()">  HELP </button>
+        <button class="button button-assertive floating-button" ng-click="show()">  HELP </button>
       </div>
       <button class="button button-positive floating-button" ng-if="$ctrl.reply" ng-click="$ctrl.accept()"> Accept</button>
       <button class="button button-primary refuse-button" ng-if="$ctrl.reply" ng-click="$ctrl.refuse()"> Refuse</button>
@@ -14,7 +14,7 @@
         <p> {{$ctrl.doctor.nom}} accept your help</p>
       </div>
       <div class="floating-text" ng-if="$ctrl.reply" >
-        <p>{{$ctrl.content.prenom}} {{$ctrl.content.nom}} need your help.</p>
+        <p>{{$ctrl.content.prenom}} {{$ctrl.content.nom}} need your help. He is Having a <b>{{$ctrl.content.message}} </b></p>
       </div>
     </ion-content>
   </ion-content>
