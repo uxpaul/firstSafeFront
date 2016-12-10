@@ -19,10 +19,11 @@
           this.emergency(message)
         })
         // A la confirmation du medecin ...
-      socket.on('accept', (user) => {
-        user.lat
-        user.lng
-        this.calculateDistances(user)
+      socket.on('accept', (newLocation) => {
+        debugger
+        newLocation.user.lat
+        newLocation.user.lng
+        this.calculateDistances(newLocation.user)
         this.acceptHelp(user)
 
       })
@@ -164,7 +165,6 @@
 
             this.markers(map)
             directionsDisplay.setMap(map);
-            //  debugger
           }
 
           let onError = (error) => {
@@ -238,18 +238,17 @@
           $scope.$apply(() => {
             this.content = message.user
             this.id = message.id
-            console.log(message.id)
+            console.log(`L'id du malade est : ${message.id}`)
             this.reply = true;
           });
         },
 
-        // Le medecin envoie son acceptation avec ses coordonnées
+        //L'aidProvider envoit ses infos à l'aidReceiver (Son socket id est aussi passé pour spécifier qu'on lui renvoit bie à lui)
         accept() {
           this.reply = false;
-          //L'aidProvider envoit ses infos à l'aidReceiver
           socket.emit('accept', {
             user: this.user,
-            id: this.id
+            id : this.id
           });
           // Passer à calculateDistances -->  destination = lieux de l'aidReceiver
 
