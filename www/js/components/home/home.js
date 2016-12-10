@@ -10,7 +10,7 @@
       socket.on('stats', (data) => console.log('Connected clients:', data.numClients))
 
 
-      // Uniquement le(s) medecin(s) reçoit le(s) message(s) de secours
+      // Uniquement le(s) medecin(s) reçoit le(s) message(s) de(s) aidReceivers
       socket.on('emergency', (message) => {
           //this.show = false;
           message.user.lat
@@ -70,8 +70,8 @@
         $onInit() {
 
           let options = {
-            // maximumAge: 3000,
-            // timeout: 15000,
+            maximumAge: 3000,
+            timeout: 15000,
             enableHighAccuracy: true
           };
           let icon = {
@@ -84,18 +84,13 @@
           let directionsDisplay = new google.maps.DirectionsRenderer();
           let geocoder = new google.maps.Geocoder();
 
-
-
-
-
-
           this.calculateDistances = (destination) => {
             destinations = [destination]
             let service = new google.maps.DistanceMatrixService();
             service.getDistanceMatrix({
               origins: [origin], //array of origins
               destinations: destinations, //array of destinations
-              travelMode: google.maps.TravelMode.WALKING,
+              travelMode: google.maps.TravelMode.DRIVING,
               unitSystem: google.maps.UnitSystem.METRIC,
               avoidHighways: false,
               avoidTolls: false
@@ -106,7 +101,7 @@
                 //we only have one origin so there should only be one row
                 let routes = response.rows[0].elements;
                 let tmp = routes[0].duration.text;
-                let resultText = `Position : ${response.destinationAddresses[0]}.<br> Temps prévu : ${tmp} <br/>`;
+                let resultText = `<em>Position</em> : ${response.destinationAddresses[0]}.<br><em>Forecast</em> : ${tmp} <br/>`;
 
                 document.getElementById("results").innerHTML = resultText;
 
@@ -141,7 +136,7 @@
 
             let marker = new google.maps.Marker({
               map: map,
-              animation: google.maps.Animation.DROP,
+              //  animation: google.maps.Animation.BOUNCE,
               position: origin,
               icon: icon
             });
@@ -157,8 +152,11 @@
             });
 
             circle.bindTo('center', marker, 'position'); //This will set the circle bound to the marker at center
-            // user.lat = position.coords.latitude
-            // user.long = position.coords.longitude
+            let user = {}
+            user.lat = position.coords.latitude
+            user.lng = position.coords.longitude
+
+            socket.emit('location', user)
 
             this.markers(map)
             directionsDisplay.setMap(map);
@@ -171,7 +169,7 @@
 
           // Get current position
           navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
-          //  navigator.geolocation.watchPosition(onSuccess, onError, options);
+          //navigator.geolocation.watchPosition(onSuccess, onError);
 
         },
 
@@ -188,7 +186,7 @@
 
                 let marker = new google.maps.Marker({
                   map: map,
-                  animation: google.maps.Animation.DROP,
+                  //  animation: google.maps.Animation.DROP,
                   position: latLng,
                   icon: icon
                 });
@@ -224,7 +222,8 @@
           });
 
         },
-        // aidReceiver le secours
+
+        // aidReceiver envoit un message de secours
         help(emergencyType) {
           this.user.message = emergencyType.text
           socket.emit('emergency', this.user);
