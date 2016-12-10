@@ -44,7 +44,11 @@
             text: 'Heart Attack'
           }, {
             text: 'Stabbing'
-          }, {
+          },
+          {
+            text: 'Choking'
+          },
+          {
             text: 'Other'
           }],
 
@@ -58,7 +62,7 @@
               // An alert dialog
             $ionicPopup.alert({
               title: 'Message sent',
-              template: 'Someone is on the road. Until he arrives, please call the 107. '
+              template: 'Someone is coming to help you. Please also call 107. '
             });
             return true;
           }
