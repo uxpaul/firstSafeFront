@@ -1,18 +1,22 @@
-<ion-view view-title="FirtSafe">  
+<ion-view view-title="FirtSafe">
   <ion-content id="margin" has-header="true">
     <ion-content scroll="true">
-      <div class="floating-text" id="results" ></div>
       <div id="map" data-tap-disabled="true"></div>
+      <div class="floating-text" id="results" ></div>
       <div ng-if="$ctrl.show">
         <button class="button button-assertive floating-button" ng-click="show()">  HELP </button>
       </div>
       <button class="button button-positive floating-button" ng-if="$ctrl.reply" ng-click="$ctrl.accept()"> Accept</button>
       <button class="button button-primary refuse-button" ng-if="$ctrl.reply" ng-click="$ctrl.refuse()"> Refuse</button>
       <div class="floating-text" ng-if="$ctrl.doctor">
-        <p> {{$ctrl.doctor.nom}} accept your help</p>
+      <!-- <h1> {{$ctrl.place.address}} </h1> -->
+        <p><em>{{$ctrl.doctor.prenom}} {{$ctrl.doctor.nom}}</em> accept your help</p>
       </div>
-      <div class="floating-text" ng-if="$ctrl.reply" >
-        <p>{{$ctrl.content.prenom}} {{$ctrl.content.nom}} needs your help. Their emergency is a <b>{{$ctrl.content.message}} </b></p>
+      <div class="floating-text" ng-if="$ctrl.content">
+        <!-- <h1>  {{$ctrl.place.address}}  </h1> -->
+        <p>{{$ctrl.content.prenom}} {{$ctrl.content.nom}} needs your help. Their emergency is a <b>{{$ctrl.content.message}} </b>
+        </p>
+
       </div>
     </ion-content>
   </ion-content>

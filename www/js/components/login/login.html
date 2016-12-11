@@ -1,22 +1,28 @@
-<ion-view view-title="FirstSafe" class="splashScreen" hide-nav-bar="true">
-  <ion-content>
-    <h1>Welcome</h1>
-
-    <div class="list loginContainer">
-      <input type="text" ng-model="$ctrl.loginData.nom" placeholder="Username" class="loginInput">
-      <input type="password" ng-model="$ctrl.loginData.password" placeholder="Password" class="loginInput">
-    </div>
-    <div class="loginSignup">
-      <button class="button button-block button-positive" type="submit" ng-click="$ctrl.doLogin()">Sign in</button>
-      <button class="button button-balanced" type="submit" ng-click="$ctrl.signup()">Create account</button>
-    </div>
-  </ion-content>
-
-
-  <div class="row">
-    <div class="col text-center">
-      <div> <img src="/img/logo.png" class="footerLogo" alt="">
+<!-- hide-nav-bar="true" -->
+<ion-view view-title="FirstSafe" class="splashScreen">
+<ion-content>
+    <div class=" headerLogin">
+    <div class="row">
+      <div class="loginContainer">
+        <h1>Welcome</h1>
+        <input type="text" ng-model="$ctrl.loginData.username" placeholder="Username" class="loginInput">
+        <input type="password" ng-model="$ctrl.loginData.password" placeholder="Password" class="loginInput">
       </div>
     </div>
-  </div>
+    <div class="loginSignup">
+      <!-- Centrage des bouttons  -->
+      <div class="row">
+        <div class="col">
+          <button class="button button-outline button-positive" type="submit" ng-click="$ctrl.doLogin()">Sign in</button>
+        </div>
+        <div class="col">
+          <button class="button button-outline button-balanced" type="submit" ng-click="$ctrl.signup()">Create account</button>
+        </div>
+      </div>
+    </div>
+        </div>
+        <div class="row footerLogin">
+
+        </div>
+  </ion-content>
 </ion-view>

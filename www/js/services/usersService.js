@@ -5,6 +5,9 @@
         get() {
             return $http.get(apiConfig.baseUrl + '/api/users')
         },
+        getOne(user){
+          return $http.get(apiConfig.baseUrl + '/api/users/'+ user)
+        },
         getPopulate(user) {
             return $http.get(apiConfig.baseUrl + '/api/users/'+ user.id)
         },

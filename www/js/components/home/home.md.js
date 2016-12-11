@@ -2,10 +2,11 @@
 
   app.config(['$stateProvider', ($stateProvider)=>{
     $stateProvider.state('app.home', {
-      url: '/home/:id',
+      url: '/home/:username',
       views: {
         'menuContent': {
-          template: '<home></home>'
+          //templateUrl: 'js/components/home/home.html'
+         template: '<home></home>'
         }
       }
     })

@@ -1,7 +1,11 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-
 }
+
+h2 {
+  text-align: center;
+}
+
 #map {
   width: 100%;
   height: 100%;
@@ -20,7 +24,6 @@ body {
   height: 50px;
   width: 50px;
   position: sticky;
-  /*border-top: 0.063em solid #ccc;*/
 }
 
 #margin {
@@ -59,25 +62,27 @@ body {
   top: 9px;
   z-index: 9999999;
   margin: 0 19vh;
-  font-family: 'Roboto','sans-serif';
   background-color: #FFFFFF;
   border-radius: 0.5em;
   width: 17em;
   padding: 1em;
 }
 
-// .bar-stable {
-//   position: fixed;
-//   z-index: 10;
-//   background-image: url("/img/rescue.png") !important;
-//   background-position: center !important;
-//   background-size: contain !important;
-//   background-repeat: no-repeat !important;
-//   width: 100%;
-// }
-
-
 .avatar img {
   height: 10em;
   margin: auto 20px;
+}
+
+.menuImage {
+  width: 22em;
+  height: 15em;
+  height: auto;
+  position: fixed;
+  background-repeat: no-repeat;
+  background-position: center !important;
+  background-size: cover !important;
+  display: inline-block;
+}
+.imageMenu {
+  height: 10em;
 }

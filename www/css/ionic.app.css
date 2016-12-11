@@ -9818,6 +9818,9 @@ a.button {
 body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
 
+h2 {
+  text-align: center; }
+
 #map {
   width: 100%;
   height: 100%; }
@@ -9832,8 +9835,7 @@ body {
   border-radius: 100em;
   height: 50px;
   width: 50px;
-  position: sticky;
-  /*border-top: 0.063em solid #ccc;*/ }
+  position: sticky; }
 
 #margin {
   padding-top: 3em; }
@@ -9867,7 +9869,6 @@ body {
   top: 9px;
   z-index: 9999999;
   margin: 0 19vh;
-  font-family: 'Roboto','sans-serif';
   background-color: #FFFFFF;
   border-radius: 0.5em;
   width: 17em;
@@ -9877,22 +9878,39 @@ body {
   height: 10em;
   margin: auto 20px; }
 
+.menuImage {
+  width: 22em;
+  height: 15em;
+  height: auto;
+  position: fixed;
+  background-repeat: no-repeat;
+  background-position: center !important;
+  background-size: cover !important;
+  display: inline-block; }
+
+.imageMenu {
+  height: 10em; }
+
 #markermodal {
   background-color: #3d4d67; }
 
 #markermodal button {
   margin: 5px 0; }
 
+.item .col,
+.item .row {
+  padding: 0; }
+
 .signupInput::-webkit-.signupInput-placeholder {
   font-family: 'roboto', sans-serif;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out; }
 
-.signup {
-  padding: 1em 0em 0 3em !important; }
+.signupInput::-webkit-.signupInput-placeholder:focus {
+  display: none; }
 
 .signupInput {
-  margin: 1em 0em 0 3em !important;
+  padding: 1em 0 2em !important;
   border: none;
   text-align: center;
   border-bottom: solid 1px #387ef5;
@@ -9905,13 +9923,16 @@ body {
   background-repeat: no-repeat;
   color: #0e6252; }
 
-.signupInput:focus, .signupInput:valid {
+.signupInput:focus,
+.signupInput:valid {
   box-shadow: none;
   outline: none;
   background-position: 0 0; }
 
-.signupInput:focus::-webkit-.signupInput-placeholder, .signupInput:valid::-webkit-.signupInput-placeholder {
+.signupInput:focus::-webkit-.signupInput-placeholder,
+.signupInput:valid::-webkit-.signupInput-placeholder {
   color: #387ef5;
+  font-size: 11px;
   -webkit-transform: translateY(-20px);
   transform: translateY(-20px);
   visibility: visible !important; }
@@ -9921,13 +9942,21 @@ body {
   text-align: center;
   margin: 2em; }
 
+.footerSignup {
+  background-image: url("/img/firstSafe.png");
+  background-size: contain;
+  height: 23.2em;
+  background-position: center;
+  padding: 0;
+  z-index: 999999999; }
+
 h1 {
-  text-align: center;
-  color: white; }
+  text-align: center; }
 
 .loginInput::-webkit-.loginInput-placeholder {
   -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out; }
+  transition: all 0.3s ease-in-out;
+  color: #387ef5 !important; }
 
 .loginInput {
   position: relative;
@@ -9946,7 +9975,7 @@ h1 {
   background-position: -200px 0;
   background-size: 200px 100%;
   background-repeat: no-repeat;
-  color: #FFFFFF !important; }
+  color: #387ef5 !important; }
 
 .loginInput:focus,
 .loginInput:valid {
@@ -9963,17 +9992,7 @@ h1 {
   visibility: visible !important; }
 
 .loginSignup {
-  display: block;
-  text-align: center;
   margin: 2em; }
-
-.splashScreen {
-  background-image: url("http://www.nexus5wallpapers.com/wp-content/uploads/Water%20Drops/Water%20Drops%20Nexus%205%20Wallpapers%20HD%2042.jpg");
-  position: fixed;
-  z-index: 10;
-  background-position: center !important;
-  background-size: cover !important;
-  background-repeat: no-repeat !important; }
 
 .footerLogo {
   text-align: center;
@@ -9983,11 +10002,13 @@ h1 {
   margin-top: 91vh; }
 
 .loginContainer {
-  margin-top: 4em; }
+  margin-top: 4em;
+  margin-right: auto;
+  margin-left: auto; }
 
 ::-webkit-input-placeholder {
   /* WebKit, Blink, Edge */
-  color: #FFFFFF !important; }
+  color: #387ef5 !important; }
 
 :-moz-placeholder {
   /* Mozilla Firefox 4 to 18 */
@@ -10002,3 +10023,13 @@ h1 {
 :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
   color: #FFFFFF !important; }
+
+.headerLogin {
+  background-color: #FFFFFF; }
+
+.footerLogin {
+  background-image: url("/img/firstSafe.png");
+  background-size: contain;
+  height: 22.29em;
+  background-position: center;
+  padding: 0; }

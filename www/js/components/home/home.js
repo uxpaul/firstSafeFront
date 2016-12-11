@@ -28,8 +28,10 @@
 
       })
 
-      usersService.getPopulate($stateParams).then((res) => {
+      usersService.getOne($stateParams.username).then((res) => {
         this.user = res.data
+        let user = this.user[0]
+        this.user = user
         socket.emit('user', this.user.situation)
         this.show = (this.user.situation === "aidReceiver" ? true : false)
 
@@ -74,7 +76,7 @@
 
           let options = {
             maximumAge: 3000,
-            timeout: 1000,
+            //  timeout: 1000,
             enableHighAccuracy: true
           };
           let icon = {
@@ -106,9 +108,11 @@
                 //we only have one origin so there should only be one row
                 let routes = response.rows[0].elements;
                 let tmp = routes[0].duration.text;
-                let resultText = `<em>Position</em> : ${response.destinationAddresses[0]}.<br><em>Forecast</em> : ${tmp} <br/>`;
+                let resultText = ` ${response.destinationAddresses[0]} ${tmp}`;
 
                 document.getElementById("results").innerHTML = resultText;
+                this.address(resultText)
+
 
                 //map the route
                 let request = {
@@ -248,9 +252,15 @@
         // ... Je reçoit ses coordonnées
         acceptHelp(user) {
           $scope.$apply(() => {
-            this.doctor = user
+            this.doctor = user.user
           });
 
+        },
+        address(address) {
+          this.place = {
+            address: address
+          }
+          console.log(this.place)
         }
 
       })

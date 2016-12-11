@@ -5,7 +5,9 @@
       url:'/login',
       views: {
         'menuContent': {
-          templateUrl:'js/components/login/login.html'
+         template:'<login></login>',
+        //templateUrl: 'js/components/login/login.html'
+
         }
       }
     })
