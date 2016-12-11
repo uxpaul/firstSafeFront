@@ -2,7 +2,7 @@
 
   app.component('home', {
     templateUrl: 'js/components/home/home.html',
-    controller: ["aidReceiversService", "usersService", "$compile", "$scope", "$http", "$stateParams", "apiConfig", "$ionicActionSheet", "$ionicPopup", function(aidReceiversService, usersService, $compile, $scope, $http, $stateParams, apiConfig, $ionicActionSheet, $ionicPopup) {
+    controller: ["aidReceiversService", "usersService", "$compile", "$scope", "$stateParams", "apiConfig", "$ionicActionSheet", "$ionicPopup", function(aidReceiversService, usersService, $compile, $scope, $stateParams, apiConfig, $ionicActionSheet, $ionicPopup) {
 
       let socket = io(apiConfig.baseUrl + '/iller');
       this.show;
@@ -12,7 +12,6 @@
 
       // Uniquement le(s) medecin(s) reçoit le(s) message(s) de(s) aidReceivers
       socket.on('emergency', (message) => {
-          //this.show = false;
           message.user.lat
           message.user.lng
           this.calculateDistances(message.user)
@@ -21,8 +20,9 @@
         // A la confirmation du medecin ...
       socket.on('accept', (newLocation) => {
         this.show = false
-        newLocation.user.lat
         newLocation.user.lng
+        newLocation.user.lat
+
         this.calculateDistances(newLocation.user)
         this.acceptHelp(newLocation)
 
@@ -45,11 +45,9 @@
             text: 'Heart Attack'
           }, {
             text: 'Stabbing'
-          },
-          {
+          }, {
             text: 'Choking'
-          },
-          {
+          }, {
             text: 'Other'
           }],
 
@@ -76,7 +74,7 @@
 
           let options = {
             maximumAge: 3000,
-            timeout: 15000,
+            timeout: 1000,
             enableHighAccuracy: true
           };
           let icon = {
@@ -88,6 +86,8 @@
           let directionsService = new google.maps.DirectionsService();
           let directionsDisplay = new google.maps.DirectionsRenderer();
           let geocoder = new google.maps.Geocoder();
+          let GeoMarker;
+
 
           this.calculateDistances = (destination) => {
             destinations = [destination]
@@ -138,33 +138,22 @@
             };
 
             let map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            this.markers(map)
+            directionsDisplay.setMap(map);
+            setMarker(position, map)
 
-            let marker = new google.maps.Marker({
-              map: map,
-              //  animation: google.maps.Animation.BOUNCE,
-              position: origin,
-              icon: icon
-            });
+          }
 
-            let circle = new google.maps.Circle({
-              map: map,
-              radius: 200,
-              scale: 200.0,
-              strokeOpacity: 0.5,
-              strokeWeight: 2,
-              fillColor: '#02B875',
-              strokeColor: '#3D9970'
-            });
-
-            circle.bindTo('center', marker, 'position'); //This will set the circle bound to the marker at center
+          //Mise en place du marker
+          let setMarker = (position, map) => {
+            origin = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            GeoMarker = new GeolocationMarker(map);
             let user = {}
             user.lat = position.coords.latitude
             user.lng = position.coords.longitude
 
             socket.emit('location', user)
 
-            this.markers(map)
-            directionsDisplay.setMap(map);
           }
 
           let onError = (error) => {
@@ -173,10 +162,10 @@
 
           // Get current position
           navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
-          //navigator.geolocation.watchPosition(onSuccess, onError);
+          // Reload marker when new postion detected
+          navigator.geolocation.watchPosition(setMarker, onError, options);
 
         },
-
         // Create markers
         markers(map) {
           usersService.get().then((res) => {
@@ -190,7 +179,6 @@
 
                 let marker = new google.maps.Marker({
                   map: map,
-                  //  animation: google.maps.Animation.DROP,
                   position: latLng,
                   icon: icon
                 });
@@ -248,11 +236,8 @@
           this.reply = false;
           socket.emit('accept', {
             user: this.user,
-            id : this.id
+            id: this.id
           });
-          // Passer à calculateDistances -->  destination = lieux de l'aidReceiver
-
-          //this.calculateDistances(destination)
         },
 
         refuse() {
@@ -265,13 +250,8 @@
           $scope.$apply(() => {
             this.doctor = user
           });
-          // Je lance calculate distance
-          // destination = celle de l'aidReceiver
-          // orgin = celle du doctor
 
-          //this.calculateDistances(destination)
         }
-
 
       })
     }]

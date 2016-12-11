@@ -5,7 +5,7 @@
       url:'/home/{userID}',
       views: {
         'menuContent': {
-          template:'<marker></marker>'
+          templateUrl:'js/components/home/markermodal.html'
         }
       }
     })

@@ -1,12 +1,11 @@
-((app)=>{
+((app) => {
   'use strict'
-  app.config(['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider)=>{
-    $urlRouterProvider.otherwise('/login')
+  app.config(['$stateProvider', '$urlRouterProvider', ($stateProvider, $urlRouterProvider) => {
+    $urlRouterProvider.otherwise('/app/login')
     $stateProvider.state('app', {
-    url: '',
-    abstract: true,
-    template: '<menu></menu>',
-
+      url: '/app',
+      abstract: true,
+      template: '<menu></menu>'
     })
   }])
 })(angular.module('app.menu'))

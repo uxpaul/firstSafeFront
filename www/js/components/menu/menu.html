@@ -10,12 +10,12 @@
         </button>
       </ion-nav-buttons>
     </ion-nav-bar>
-    <ion-nav-view name="menuContent"></ion-nav-view>
+    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
   </ion-side-menu-content>
 
   <ion-side-menu side="left">
     <ion-header-bar class="bar-assertive">
-      <h1 class="title">Profil</h1>
+      <h1 class="title">Profile</h1>
     </ion-header-bar>
     <ion-content>
       <div class="item avatar">
@@ -36,9 +36,10 @@
           Settings
         </ion-item>
         <ion-item menu-close>
-          <a ng-click="$ctrl.logout"> Logout</a>
+          <a ng-click="$ctrl.logout">
           <i class="icon ion-log-out"></i>
           Sign out
+           </a>
         </ion-item>
       </ion-list>
     </ion-content>

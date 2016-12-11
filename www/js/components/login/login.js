@@ -4,6 +4,7 @@
     templateUrl: 'js/components/login/login.html',
     controller: ["$ionicModal", "$scope", "$state", "usersService", function($ionicModal, $scope, $state, usersService) {
 
+
       this.closeSignup = false;
       // Create the signup modal that we will use later
       $ionicModal.fromTemplateUrl('js/components/signup/signup.html', {

@@ -5,7 +5,7 @@
       url:'/signup',
       views: {
         'menuContent': {
-          template:'<signup></signup>'
+          templateUrl:'js/components/signup/signup.html'
         }
       }
     })

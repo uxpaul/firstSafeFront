@@ -1,44 +1,86 @@
-h1, .loginInput::-webkit-.loginInput-placeholder, button {
-  font-family: 'roboto', sans-serif;
-  -webkit-transition: all 0.3s ease-in-out;
-          transition: all 0.3s ease-in-out;
-}
-.form {
-  margin: 171px 5em 0;
+h1 {
   text-align: center;
-
-
+  color: white;
 }
+
+.loginInput::-webkit-.loginInput-placeholder {
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
 .loginInput {
-  margin: 3em 3em 3em 3em !important;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+  text-align: left;
   border: none;
   text-align: center;
-
   padding: 10px 0;
   border-bottom: solid 1px rgb(56, 126, 245);
   -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-          transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
   background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, rgb(56, 126, 245) 4%);
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, rgb(56, 126, 245) 4%);
   background-position: -200px 0;
   background-size: 200px 100%;
   background-repeat: no-repeat;
-  color: #0e6252;
+  color: #FFFFFF !important;
 }
-.loginInput:focus, .loginInput:valid {
+
+.loginInput:focus,
+.loginInput:valid {
   box-shadow: none;
   outline: none;
   background-position: 0 0;
 }
-.loginInput:focus::-webkit-.loginInput-placeholder, .loginInput:valid::-webkit-.loginInput-placeholder {
+
+.loginInput:focus::-webkit-.loginInput-placeholder,
+.loginInput:valid::-webkit-.loginInput-placeholder {
   color: rgb(56, 126, 245);
-  //font-size: 11px;
+  font-size: 11px;
   -webkit-transform: translateY(-20px);
-          transform: translateY(-20px);
+  transform: translateY(-20px);
   visibility: visible !important;
 }
-.signup {
+
+.loginSignup {
   display: block;
   text-align: center;
   margin: 2em;
+}
+
+.splashScreen {
+  background-image: url('http://www.nexus5wallpapers.com/wp-content/uploads/Water%20Drops/Water%20Drops%20Nexus%205%20Wallpapers%20HD%2042.jpg');
+  position: fixed;
+  z-index: 10;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.footerLogo {
+  text-align: center;
+  z-index: 10;
+  height: 44px;
+  display: inline-block;
+  margin-top: 91vh;
+  //: absolute;
+}
+.loginContainer {
+  margin-top: 4em;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #FFFFFF !important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color:    #FFFFFF !important;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color:    #FFFFFF !important;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color:    #FFFFFF !important;
 }
