@@ -35,7 +35,7 @@
         this.user = res.data
         let user = this.user[0]
         this.user = user
-        
+
         socket.emit('user', this.user.situation)
         this.show = (this.user.situation === "aidReceiver" ? true : false)
 
@@ -79,7 +79,7 @@
         $onInit() {
 
           let options = {
-            maximumAge: 3000,
+            maximumAge: 1000,
             //  timeout: 1000,
             enableHighAccuracy: true
           };
@@ -171,14 +171,15 @@
           // Recharge la position si erreure
           this.reload = ()=>{
             navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+            navigator.geolocation.watchPosition(setMarker, onError, options);
+
           }
 
         },
         // Create markers
         markers(map) {
-
           //Only the AIDREC can see the APRO. The APRO doesnt see AIDREC
-          //if(this.user.situation ==="aidReceiver"){
+        if(this.user && this.user.situation ==="aidReceiver"){
           usersService.get().then((res) => {
             this.users = res.data.forEach((user) => {
               if (user.situation === "aidProvider") {
@@ -201,7 +202,7 @@
               }
             })
           })
-      //  }
+      }
 
         },
 

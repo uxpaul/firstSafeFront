@@ -8,13 +8,13 @@
       <button class="button button-positive floating-button" ng-if="$ctrl.reply" ng-click="$ctrl.accept()"> Accept</button>
       <button class="button button-primary refuse-button" ng-if="$ctrl.reply" ng-click="$ctrl.refuse()"> Refuse</button>
       <div class="floating-text" ng-if="$ctrl.doctor">
-        <p><b>Doctor <em>{{$ctrl.doctor.prenom}} {{$ctrl.doctor.nom}}</em> accept your help
+        <p><b><em>{{$ctrl.doctor.prenom}} {{$ctrl.doctor.nom}}</em> accept your help
         </b>and is coming from : <br>{{$ctrl.place.address}}<br>
-        <b>Forecaste :</b><br> {{$ctrl.place.time}}</p>
+        <b>Estimated time of arrival :</b><br> {{$ctrl.place.time}}</p>
       </div>
       <div class="floating-text" ng-if="$ctrl.content">
         <p><b>aidReceiver's address :</b><br>{{$ctrl.place.address}}
-          <b>Forecaste :</b><br> {{$ctrl.place.time}}</p>
+          <b>Estimated time of arrival :</b><br> {{$ctrl.place.time}}</p>
         <p  ng-if="$ctrl.reply">{{$ctrl.content.prenom}} {{$ctrl.content.nom}} needs your help. Their emergency is a <b>{{$ctrl.content.message}} </b>
         </p>
       </div>
