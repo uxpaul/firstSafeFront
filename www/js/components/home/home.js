@@ -5,6 +5,8 @@
     controller: ["aidReceiversService", "usersService", "$compile", "$scope", "$stateParams", "apiConfig", "$ionicActionSheet", "$ionicPopup", function(aidReceiversService, usersService, $compile, $scope, $stateParams, apiConfig, $ionicActionSheet, $ionicPopup) {
 
       let socket = io(apiConfig.baseUrl + '/iller');
+      let markers = []
+
       this.show;
       this.reply;
       socket.on('stats', (data) => console.log('Connected clients:', data.numClients))
@@ -33,7 +35,8 @@
         this.user = res.data
         let user = this.user[0]
         this.user = user
-        socket.emit('user', this.user)
+        
+        socket.emit('user', this.user.situation)
         this.show = (this.user.situation === "aidReceiver" ? true : false)
 
       })
@@ -87,7 +90,6 @@
           let geocoder = new google.maps.Geocoder();
           let GeoMarker;
 
-
           this.calculateDistances = (destination) => {
             destinations = [destination]
             let service = new google.maps.DistanceMatrixService();
@@ -138,6 +140,9 @@
             let map = new google.maps.Map(document.getElementById('map'), mapOptions);
             this.markers(map)
             directionsDisplay.setMap(map);
+
+            // Supprime les markers A et B prévues par défaut
+            directionsDisplay.setOptions( { suppressMarkers: true } );
             setMarker(position, map)
 
           }
@@ -171,8 +176,9 @@
         },
         // Create markers
         markers(map) {
+
           //Only the AIDREC can see the APRO. The APRO doesnt see AIDREC
-          if(this.user.situation ==="aidReceiver"){
+          //if(this.user.situation ==="aidReceiver"){
           usersService.get().then((res) => {
             this.users = res.data.forEach((user) => {
               if (user.situation === "aidProvider") {
@@ -188,13 +194,14 @@
                   icon: icon
                 });
 
+                markers.push(marker)
                 // I declare It to close the InfoWindow when I click on an other marker
                 this.infoWindow = new google.maps.InfoWindow();
                 this.windows(marker, user)
               }
             })
           })
-        }
+      //  }
 
         },
 
@@ -263,6 +270,7 @@
 
         // ... Je reçoit ses coordonnées
         acceptHelp(user) {
+          //this.markers(null)
           $scope.$apply(() => {
             this.doctor = user.user
           });
