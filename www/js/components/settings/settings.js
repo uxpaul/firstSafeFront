@@ -2,14 +2,21 @@
 
   app.component('settings', {
     templateUrl:'js/components/settings/settings.html',
-    controller:["$stateParams", "usersService",function($stateParams, usersService){
+    controller:["$stateParams", "usersService", "apiConfig",function($stateParams, usersService, apiConfig){
       angular.extend(this, {
         $onInit(){
 
           this.editMode = false
+          let socket = io(apiConfig.baseUrl + '/iller');
+
 
           this.edit = ()=>{
-            this.editMode = true
+            if(this.editMode)
+            this.editMode = false
+            else {
+              this.editMode = true
+            }
+
           }
 
         }

@@ -5,7 +5,8 @@
       url: '/settings/:id',
       views: {
         'menuContent': {
-          templateUrl: 'js/components/settings/settings.html'
+          template: '<settings></settings>'
+          //templateUrl: 'js/components/settings/settings.html'
         }
       }
     })

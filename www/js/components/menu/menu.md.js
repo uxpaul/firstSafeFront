@@ -15,7 +15,6 @@
       this.logout = () => {
         socket.emit('disconnect me')
       }
-
     }]
   })
 

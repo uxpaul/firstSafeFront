@@ -1,6 +1,5 @@
-<ion-view view-title="Settings">
-  <ion-content>
-    <ion-view>
+<ion-view title="Settings">
+  <ion-content title="Settings" has-header="true">
       <div class="item item-icon-left">
         <span class="input-label"><i class="icon ion-person"></i></span>
         <p ng-if="!$ctrl.editMode" type="text" ng-model="user.prenom" placeholder="Name"></p>
@@ -36,7 +35,5 @@
         </button>
         </div>
       </div>
-    </ion-view>
-
-  </ion-content>
-  </ion-nav-view>
+    </ion-content>
+  </ion-view>

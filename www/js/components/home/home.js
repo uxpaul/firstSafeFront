@@ -33,7 +33,7 @@
         this.user = res.data
         let user = this.user[0]
         this.user = user
-        socket.emit('user', this.user.situation)
+        socket.emit('user', this.user)
         this.show = (this.user.situation === "aidReceiver" ? true : false)
 
       })
@@ -107,8 +107,6 @@
                 let tmp = routes[0].duration.text;
                 let address = ` ${response.destinationAddresses[0]}`;
 
-              //  document.getElementById("results").innerHTML = resultText;
-
                  //map the route
                 let request = {
                   origin: origin,
@@ -165,15 +163,22 @@
           // Reload marker when new postion detected
           navigator.geolocation.watchPosition(setMarker, onError, options);
 
+          // Recharge la position si erreure
+          this.reload = ()=>{
+            navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+          }
+
         },
         // Create markers
         markers(map) {
+          //Only the AIDREC can see the APRO. The APRO doesnt see AIDREC
+          if(this.user.situation ==="aidReceiver"){
           usersService.get().then((res) => {
             this.users = res.data.forEach((user) => {
-              if (user.situation === "aidReceiver") {
+              if (user.situation === "aidProvider") {
                 let latLng = new google.maps.LatLng(user.lat, user.lng);
                 let icon = {
-                  url: user.image,
+                  url: 'img/rescue.png',
                   scaledSize: new google.maps.Size(20, 20)
                 }
 
@@ -189,6 +194,8 @@
               }
             })
           })
+        }
+
         },
 
         // Set infoWindows of markers

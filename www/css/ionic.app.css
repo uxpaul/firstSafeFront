@@ -9891,6 +9891,17 @@ h2 {
 .imageMenu {
   height: 10em; }
 
+.ion-ios-navigate {
+  position: absolute;
+  top: 9px;
+  z-index: 9999999;
+  display: inline-block;
+  margin: 30em 3em;
+  position: absolute;
+  top: 10px;
+  margin: 83vh 1vh;
+  color: #387EF5; }
+
 #markermodal {
   background-color: #3d4d67; }
 
