@@ -8,7 +8,7 @@
 
           this.signupData = {};
 
-          
+
         },
         // Perform the signup action when the user submits the signup form
         doSignup() {

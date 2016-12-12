@@ -2,21 +2,21 @@
   <ion-content id="margin" has-header="true">
     <ion-content scroll="true">
       <div id="map" data-tap-disabled="true"></div>
-      <div class="floating-text" id="results" ></div>
       <div ng-if="$ctrl.show">
         <button class="button button-assertive floating-button" ng-click="show()">  HELP </button>
       </div>
       <button class="button button-positive floating-button" ng-if="$ctrl.reply" ng-click="$ctrl.accept()"> Accept</button>
       <button class="button button-primary refuse-button" ng-if="$ctrl.reply" ng-click="$ctrl.refuse()"> Refuse</button>
       <div class="floating-text" ng-if="$ctrl.doctor">
-      <!-- <h1> {{$ctrl.place.address}} </h1> -->
-        <p><em>{{$ctrl.doctor.prenom}} {{$ctrl.doctor.nom}}</em> accept your help</p>
+        <p><b>Doctor <em>{{$ctrl.doctor.prenom}} {{$ctrl.doctor.nom}}</em> accept your help
+        </b>and is coming from : {{$ctrl.place.address}}
+        <b>Forecaste :</b><br> {{$ctrl.place.time}}</p>
       </div>
       <div class="floating-text" ng-if="$ctrl.content">
-        <!-- <h1>  {{$ctrl.place.address}}  </h1> -->
-        <p>{{$ctrl.content.prenom}} {{$ctrl.content.nom}} needs your help. Their emergency is a <b>{{$ctrl.content.message}} </b>
+        <p><b>aidReceiver's address :</b><br>{{$ctrl.place.address}}
+          <b>Forecaste :</b><br> {{$ctrl.place.time}}</p>
+        <p  ng-if="$ctrl.reply">{{$ctrl.content.prenom}} {{$ctrl.content.nom}} needs your help. Their emergency is a <b>{{$ctrl.content.message}} </b>
         </p>
-
       </div>
     </ion-content>
   </ion-content>

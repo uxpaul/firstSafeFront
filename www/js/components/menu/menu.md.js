@@ -2,7 +2,7 @@
 
   app.component('menu', {
     templateUrl: 'js/components/menu/menu.html',
-    controller: ['$timeout', '$state', function($timeout, $state) {
+    controller: ['$timeout', '$state','apiConfig', function($timeout, $state, apiConfig) {
 
       // With the new view caching in Ionic, Controllers are only called
       // when they are recreated or on app start, instead of every page change.
@@ -10,9 +10,9 @@
       // listen for the $ionicView.enter event:
       //$scope.$on('$ionicView.enter', function(e) {
       //});
-      
+      let socket = io(apiConfig.baseUrl + '/iller');
+
       this.logout = () => {
-        debugger
         socket.emit('disconnect me')
       }
 

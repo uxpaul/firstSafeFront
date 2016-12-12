@@ -14,8 +14,9 @@
       socket.on('emergency', (message) => {
           message.user.lat
           message.user.lng
-          this.calculateDistances(message.user)
           this.emergency(message)
+          this.calculateDistances(message.user)
+
         })
         // A la confirmation du medecin ...
       socket.on('accept', (newLocation) => {
@@ -23,8 +24,8 @@
         newLocation.user.lng
         newLocation.user.lat
 
-        this.calculateDistances(newLocation.user)
         this.acceptHelp(newLocation)
+        this.calculateDistances(newLocation.user)
 
       })
 
@@ -79,10 +80,6 @@
             //  timeout: 1000,
             enableHighAccuracy: true
           };
-          let icon = {
-            url: "img/ionic.png",
-            scaledSize: new google.maps.Size(20, 20)
-          }
           let origin;
           let destinations;
           let directionsService = new google.maps.DirectionsService();
@@ -108,19 +105,18 @@
                 //we only have one origin so there should only be one row
                 let routes = response.rows[0].elements;
                 let tmp = routes[0].duration.text;
-                let resultText = ` ${response.destinationAddresses[0]} ${tmp}`;
+                let address = ` ${response.destinationAddresses[0]}`;
 
-                document.getElementById("results").innerHTML = resultText;
-                this.address(resultText)
+              //  document.getElementById("results").innerHTML = resultText;
 
-
-                //map the route
+                 //map the route
                 let request = {
                   origin: origin,
                   destination: destinations[0],
                   travelMode: google.maps.TravelMode.WALKING
                 };
 
+                this.address(address, tmp)
                 // Display route in blue line
                 directionsService.route(request, (result, status) => {
                   if (status == google.maps.DirectionsStatus.OK) {
@@ -218,6 +214,15 @@
           });
 
         },
+        address(address,span) {
+          $scope.$apply(() => {
+          this.place = {
+            address: address,
+            time:span
+          }
+        });
+         console.log(this.place)
+        },
 
         // aidReceiver envoit un message de secours
         help(emergencyType) {
@@ -235,7 +240,7 @@
           });
         },
 
-        //L'aidProvider envoit ses infos à l'aidReceiver (Son socket id est aussi passé pour spécifier qu'on lui renvoit bie à lui)
+        //L'aidProvider envoit ses infos à l'aidReceiver (Son socket id est aussi passé pour spécifier qu'on lui renvoit bien à lui)
         accept() {
           this.reply = false;
           socket.emit('accept', {
@@ -254,13 +259,6 @@
           $scope.$apply(() => {
             this.doctor = user.user
           });
-
-        },
-        address(address) {
-          this.place = {
-            address: address
-          }
-          console.log(this.place)
         }
 
       })
