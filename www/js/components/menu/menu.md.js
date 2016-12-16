@@ -14,7 +14,7 @@
 
       this.logout = () => {
         socket.emit('disconnect me')
-
+        
         usersService.disconnect().then((res)=>{
           $state.go('app.login')
           $state.reload()

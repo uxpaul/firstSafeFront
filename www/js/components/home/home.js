@@ -2,7 +2,7 @@
 
   app.component('home', {
     templateUrl: 'js/components/home/home.html',
-    controller: ["aidReceiversService", "usersService", "$compile", "$scope", "$stateParams", "apiConfig", "$ionicActionSheet", "$ionicPopup", '$timeout', function(aidReceiversService, usersService, $compile, $scope, $stateParams, apiConfig, $ionicActionSheet, $ionicPopup, $timeout) {
+    controller: ["aidReceiversService", "usersService", "$compile", "$scope", "apiConfig", "$ionicActionSheet", "$ionicPopup", '$timeout', function(aidReceiversService, usersService, $compile, $scope, apiConfig, $ionicActionSheet, $ionicPopup, $timeout) {
 
       let socket = io(apiConfig.baseUrl + '/iller');
       let markers = []
@@ -10,8 +10,6 @@
       this.show;
       this.reply;
       this.state;
-
-      //
       this.waiting = true;
       this.marker = new google.maps.Marker();
 

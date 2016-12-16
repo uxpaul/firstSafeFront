@@ -32,9 +32,7 @@
         doLogin() {
           console.log('Doing login', this.loginData);
           usersService.connect(this.loginData).then((res) => {
-            $state.go('app.home', {
-              username: this.loginData.username
-            })
+            $state.go('app.home')
           })
 
         },
