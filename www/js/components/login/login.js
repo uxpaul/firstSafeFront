@@ -2,7 +2,7 @@
 
   app.component('login', {
     templateUrl: 'js/components/login/login.html',
-    controller: ["$ionicModal", "$scope", "$state", "usersService","UsersService", function($ionicModal, $scope, $state, usersService, UsersService) {
+    controller: ["$ionicModal", "$scope", "$state", "usersService", "UsersService", function($ionicModal, $scope, $state, usersService, UsersService) {
 
 
       this.closeSignup = false;
@@ -30,17 +30,18 @@
         },
         // Perform the login action when the user submits the login form
         doLogin() {
-          //UsersService.connect(this.loginData)
           console.log('Doing login', this.loginData);
-          $state.go('app.home', {
-            username: this.loginData.username
+          usersService.connect(this.loginData).then((res) => {
+            $state.go('app.home', {
+              username: this.loginData.username
+            })
           })
 
         },
         doSignup(newUser) {
           usersService.add(newUser).then((res) => {
-           this.newUser = res.data
-           console.log(this.newUser)
+            this.newUser = res.data
+            console.log(this.newUser)
           })
           this.close = true
         }

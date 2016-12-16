@@ -10040,7 +10040,8 @@ h1 {
 
 .footerLogin {
   background-image: url("/img/firstSafe.png");
-  background-size: contain;
-  height: 22.29em;
+  background-size: cover;
+  height: 22.19em;
   background-position: center;
-  padding: 0; }
+  padding: 0;
+  background-repeat: no-repeat; }

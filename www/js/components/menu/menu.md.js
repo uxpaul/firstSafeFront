@@ -2,7 +2,7 @@
 
   app.component('menu', {
     templateUrl: 'js/components/menu/menu.html',
-    controller: ['$timeout', '$state','apiConfig', function($timeout, $state, apiConfig) {
+    controller: ['$timeout', '$state','apiConfig' ,'usersService', function($timeout, $state, apiConfig, usersService) {
 
       // With the new view caching in Ionic, Controllers are only called
       // when they are recreated or on app start, instead of every page change.
@@ -14,6 +14,11 @@
 
       this.logout = () => {
         socket.emit('disconnect me')
+
+        usersService.disconnect().then((res)=>{
+          $state.go('app.login')
+          $state.reload()
+        })
       }
     }]
   })

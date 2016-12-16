@@ -2,15 +2,29 @@
 
   app.component('home', {
     templateUrl: 'js/components/home/home.html',
-    controller: ["aidReceiversService", "usersService", "$compile", "$scope", "$stateParams", "apiConfig", "$ionicActionSheet", "$ionicPopup", function(aidReceiversService, usersService, $compile, $scope, $stateParams, apiConfig, $ionicActionSheet, $ionicPopup) {
+    controller: ["aidReceiversService", "usersService", "$compile", "$scope", "$stateParams", "apiConfig", "$ionicActionSheet", "$ionicPopup", '$timeout', function(aidReceiversService, usersService, $compile, $scope, $stateParams, apiConfig, $ionicActionSheet, $ionicPopup, $timeout) {
 
       let socket = io(apiConfig.baseUrl + '/iller');
       let markers = []
 
       this.show;
       this.reply;
+      this.state;
+
+      //
+      this.waiting = true;
+      this.marker = new google.maps.Marker();
+
+      usersService.getCurrent().then((res)=>{
+        this.user = res
+        socket.emit('user', this.user)
+        this.show = (this.user.situation === "aidReceiver" ? true : false)
+        this.init();
+      })
+
       socket.on('stats', (data) => console.log('Connected clients:', data.numClients))
 
+      socket.on('locationReceiver', (locationR) => console.log('locationR:', locationR))
 
       // Uniquement le(s) medecin(s) reçoit le(s) message(s) de(s) aidReceivers
       socket.on('emergency', (message) => {
@@ -21,24 +35,21 @@
 
         })
         // A la confirmation du medecin ...
-      socket.on('accept', (newLocation) => {
+      socket.on('accept', (aidProvider) => {
+        socket.emit('acceptation')
+        this.waiting = false
         this.show = false
-        newLocation.user.lng
-        newLocation.user.lat
-
-        this.acceptHelp(newLocation)
-        this.calculateDistances(newLocation.user)
+        aidProvider.user.lng
+        aidProvider.user.lat
+        this.aidProvider = aidProvider.id
+        console.log("aidProvider qui a accepté" + aidProvider.id)
+        this.acceptHelp(aidProvider)
+        this.calculateDistances(aidProvider.user)
 
       })
 
-      usersService.getOne($stateParams.username).then((res) => {
-        this.user = res.data
-        let user = this.user[0]
-        this.user = user
-
-        socket.emit('user', this.user.situation)
-        this.show = (this.user.situation === "aidReceiver" ? true : false)
-
+      socket.on('disconnect', () => {
+        this.deleteMarker()
       })
 
       $scope.show = () => {
@@ -74,23 +85,29 @@
         });
 
       };
+      let directionsDisplay;
 
       angular.extend(this, {
         $onInit() {
 
+
+
+        },
+        init() {
           let options = {
             maximumAge: 1000,
-            //  timeout: 1000,
+            //  timeout: 4000,
             enableHighAccuracy: true
           };
           let origin;
           let destinations;
           let directionsService = new google.maps.DirectionsService();
-          let directionsDisplay = new google.maps.DirectionsRenderer();
           let geocoder = new google.maps.Geocoder();
           let GeoMarker;
+          directionsDisplay = new google.maps.DirectionsRenderer();
 
           this.calculateDistances = (destination) => {
+
             destinations = [destination]
             let service = new google.maps.DistanceMatrixService();
             service.getDistanceMatrix({
@@ -109,7 +126,7 @@
                 let tmp = routes[0].duration.text;
                 let address = ` ${response.destinationAddresses[0]}`;
 
-                 //map the route
+                //map the route
                 let request = {
                   origin: origin,
                   destination: destinations[0],
@@ -117,7 +134,7 @@
                 };
 
                 this.address(address, tmp)
-                // Display route in blue line
+                  // Display route in blue line
                 directionsService.route(request, (result, status) => {
                   if (status == google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(result);
@@ -137,31 +154,45 @@
               mapTypeId: google.maps.MapTypeId.ROADMAP
             };
 
-            let map = new google.maps.Map(document.getElementById('map'), mapOptions);
-            this.markers(map)
-            directionsDisplay.setMap(map);
+            this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+            directionsDisplay.setMap(this.map);
 
             // Supprime les markers A et B prévues par défaut
-            directionsDisplay.setOptions( { suppressMarkers: true } );
+            directionsDisplay.setOptions({
+              suppressMarkers: true
+            });
             setMarker(position, map)
 
           }
 
           //Mise en place du marker
-          let setMarker = (position, map) => {
+          let setMarker = (position) => {
             origin = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            GeoMarker = new GeolocationMarker(map);
-            let user = {}
-            user.lat = position.coords.latitude
-            user.lng = position.coords.longitude
+            GeoMarker = new GeolocationMarker(this.map);
+            //let user = {}
+            this.user.lat = position.coords.latitude
+            this.user.lng = position.coords.longitude
 
-            socket.emit('location', user)
-
+            this.newPlace(this.user)
           }
 
           let onError = (error) => {
             console.log("Could not get location");
           };
+
+          // Si il n'y pas eu d'acception il reçoit la localisation de tous
+
+          socket.on('show-marker', (data) => {
+            if (this.waiting) {
+              this.markers(data.newLocation)
+            } else {
+              if (data.id === this.aidProvider) {
+                this.markers(data.newLocation)
+                console.log(data.id)
+              }
+            }
+          })
+
 
           // Get current position
           navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
@@ -169,46 +200,50 @@
           navigator.geolocation.watchPosition(setMarker, onError, options);
 
           // Recharge la position si erreure
-          this.reload = ()=>{
+          this.reload = () => {
             navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
-            navigator.geolocation.watchPosition(setMarker, onError, options);
+          }
+        },
+        newPlace(user) {
+          if (this.user.situation === "aidReceiver")
+            socket.emit('locationReceiver', user)
+          else {
+            socket.emit('locationProvider', user)
+          }
+        },
+        // Create markers
+        markers(newLocation) {
+          //Only the AIDREC can see the APRO. The APRO doesnt see AIDREC
+          if (this.user.situation === "aidReceiver") {
+            if (!this.waiting) {
+              this.marker.setMap(null);
+             }
+
+            let latLng = new google.maps.LatLng(newLocation.lat, newLocation.lng);
+            let icon = {
+              url: 'img/rescue.png',
+              scaledSize: new google.maps.Size(20, 20)
+            }
+
+            this.marker = new google.maps.Marker({
+              position: latLng,
+              icon: icon
+            });
+
+            markers.push(this.marker)
+
+            this.marker.setMap(this.map);
+            // I declare It to close the InfoWindow when I click on an other marker
+            this.infoWindow = new google.maps.InfoWindow();
 
           }
 
         },
-        // Create markers
-        markers(map) {
-          //Only the AIDREC can see the APRO. The APRO doesnt see AIDREC
-        if(this.user && this.user.situation ==="aidReceiver"){
-          usersService.get().then((res) => {
-            this.users = res.data.forEach((user) => {
-              if (user.situation === "aidProvider") {
-                let latLng = new google.maps.LatLng(user.lat, user.lng);
-                let icon = {
-                  url: 'img/rescue.png',
-                  scaledSize: new google.maps.Size(20, 20)
-                }
-
-                let marker = new google.maps.Marker({
-                  map: map,
-                  position: latLng,
-                  icon: icon
-                });
-
-                markers.push(marker)
-                // I declare It to close the InfoWindow when I click on an other marker
-                this.infoWindow = new google.maps.InfoWindow();
-                this.windows(marker, user)
-              }
-            })
-          })
-      }
-
+        deleteMarker() {
+          this.marker.setMap(null);
         },
-
         // Set infoWindows of markers
         windows(marker, user) {
-
           // Enregistrement de la position du marker
           let destination = marker.position
           let contentString = `<div>
@@ -223,20 +258,20 @@
           // Lorsque je clique sur le marker ... affichage + calcul distance
           google.maps.event.addListener(marker, 'click', () => {
             this.infoWindow.setContent(infoWindowContent)
-            this.infoWindow.open(map, marker);
+            this.infoWindow.open(this.map, marker);
             // pass marker's postion(destination) to calculateDistances()
             this.calculateDistances(destination)
           });
 
         },
-        address(address,span) {
+        address(address, span) {
           $scope.$apply(() => {
-          this.place = {
-            address: address,
-            time:span
-          }
-        });
-         console.log(this.place)
+            this.place = {
+              address: address,
+              time: span
+            }
+          });
+          console.log(this.place)
         },
 
         // aidReceiver envoit un message de secours
@@ -250,7 +285,7 @@
           $scope.$apply(() => {
             this.content = message.user
             this.id = message.id
-            console.log(`L'id du malade est : ${message.id}`)
+            console.log(`aidReceiver's id : ${message.id}`)
             this.reply = true;
           });
         },
@@ -258,6 +293,8 @@
         //L'aidProvider envoit ses infos à l'aidReceiver (Son socket id est aussi passé pour spécifier qu'on lui renvoit bien à lui)
         accept() {
           this.reply = false;
+          this.state = true;
+
           socket.emit('accept', {
             user: this.user,
             id: this.id
@@ -271,10 +308,23 @@
 
         // ... Je reçoit ses coordonnées
         acceptHelp(user) {
-          //this.markers(null)
           $scope.$apply(() => {
             this.doctor = user.user
           });
+        },
+
+        endMission() {
+          socket.emit('Rejoin')
+          this.state = false;
+          this.content = false;
+          directionsDisplay.setMap();
+          this.init()
+        },
+
+        curred() {
+          this.doctor = false
+          directionsDisplay.setMap();
+          this.init()
         }
 
       })

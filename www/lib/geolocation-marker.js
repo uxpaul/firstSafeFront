@@ -31,7 +31,7 @@
     c && (f = h(f, c));
     c = {
       clickable: !1,
-      radius: 100,
+      radius: 50,
       strokeOpacity: 0.2,
       strokeWeight: 0,
       fillColor: '#808080',

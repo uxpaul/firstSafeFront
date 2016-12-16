@@ -1,19 +1,22 @@
 <ion-view view-title="FirtSafe">
   <ion-content id="margin" has-header="true">
-    <ion-content scroll="true">
+    <ion-content scroll="false">
       <div id="map" data-tap-disabled="true"></div>
       <div ng-if="$ctrl.show">
         <button class="button button-assertive floating-button" ng-click="show()">  HELP </button>
       </div>
+      <button class="button button-balanced floating-button" ng-if="$ctrl.doctor" ng-click="$ctrl.curred()"> Curred </button>
+
       <button class="button button-positive floating-button" ng-if="$ctrl.reply" ng-click="$ctrl.accept()"> Accept</button>
       <button class="button button-primary refuse-button" ng-if="$ctrl.reply" ng-click="$ctrl.refuse()"> Refuse</button>
+      <button class="button button-balanced floating-button" ng-if="$ctrl.state" ng-click="$ctrl.endMission()"> Saved</button>
       <div class="floating-text" ng-if="$ctrl.doctor">
         <p><b><em>{{$ctrl.doctor.prenom}} {{$ctrl.doctor.nom}}</em> accept your help
         </b>and is coming from : <br>{{$ctrl.place.address}}<br>
         <b>Estimated time of arrival :</b><br> {{$ctrl.place.time}}</p>
       </div>
       <div class="floating-text" ng-if="$ctrl.content">
-        <p><b>aidReceiver's address :</b><br>{{$ctrl.place.address}}
+        <p><b>aidReceiver's address :</b><br>{{$ctrl.place.address}}<br>
           <b>Estimated time of arrival :</b><br> {{$ctrl.place.time}}</p>
         <p  ng-if="$ctrl.reply">{{$ctrl.content.prenom}} {{$ctrl.content.nom}} needs your help. Their emergency is a <b>{{$ctrl.content.message}} </b>
         </p>
