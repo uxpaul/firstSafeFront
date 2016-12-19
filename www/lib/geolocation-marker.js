@@ -12,30 +12,30 @@
     this.a = this.b = null;
     this.g = -1;
     var f = {
-      clickable: !1,
+      clickable: true,
       cursor: "pointer",
       draggable: !1,
       flat: !0,
       icon: {
-        url: "https://chadkillingsworth.github.io/geolocation-marker/images/gpsloc.png",
+        url: "img/marker4.ico",
         size: new google.maps.Size(34, 34),
-        scaledSize: new google.maps.Size(17, 17),
+        scaledSize: new google.maps.Size(34, 34),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(8, 8)
       },
       optimized: !1,
       position: new google.maps.LatLng(0, 0),
-      title: "Current location",
+      title: "Your Position",
       zIndex: 2
-    };
+        };
     c && (f = h(f, c));
     c = {
-      clickable: !1,
-      radius: 50,
-      strokeOpacity: 0.2,
+      clickable: true,
+      radius: 0,
+      strokeOpacity: 0,
       strokeWeight: 0,
       fillColor: '#808080',
-      fillOpacity: .4,
+      fillOpacity: 0,
       zIndex: 1
     };
     e && (c = h(c, e));

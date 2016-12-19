@@ -5,15 +5,16 @@
     controller: ["aidReceiversService", "usersService", "$compile", "$scope", "apiConfig", "$ionicActionSheet", "$ionicPopup", '$timeout', function(aidReceiversService, usersService, $compile, $scope, apiConfig, $ionicActionSheet, $ionicPopup, $timeout) {
 
       let socket = io(apiConfig.baseUrl + '/iller');
-      let markers = []
+      let icon = {
+        url: 'img/rescue.png',
+        scaledSize: new google.maps.Size(20, 20)
+      }
 
       this.show;
       this.reply;
       this.state;
-      this.waiting = true;
-      this.marker = new google.maps.Marker();
 
-      usersService.getCurrent().then((res)=>{
+      usersService.getCurrent().then((res) => {
         this.user = res
         socket.emit('user', this.user)
         this.show = (this.user.situation === "aidReceiver" ? true : false)
@@ -21,8 +22,6 @@
       })
 
       socket.on('stats', (data) => console.log('Connected clients:', data.numClients))
-
-      socket.on('locationReceiver', (locationR) => console.log('locationR:', locationR))
 
       // Uniquement le(s) medecin(s) reçoit le(s) message(s) de(s) aidReceivers
       socket.on('emergency', (message) => {
@@ -35,19 +34,19 @@
         // A la confirmation du medecin ...
       socket.on('accept', (aidProvider) => {
         socket.emit('acceptation')
-        this.waiting = false
         this.show = false
         aidProvider.user.lng
         aidProvider.user.lat
         this.aidProvider = aidProvider.id
-        console.log("aidProvider qui a accepté" + aidProvider.id)
+        console.log("aidProvider qui a accepté" + this.aidProvider)
         this.acceptHelp(aidProvider)
         this.calculateDistances(aidProvider.user)
-
       })
+      console.log(this.aidProvider);
 
-      socket.on('disconnect', () => {
-        this.deleteMarker()
+      socket.on('disconnect', (socketid) => {
+        console.log(socketid)
+        //    this.deleteMarker()
       })
 
       $scope.show = () => {
@@ -101,8 +100,8 @@
           let destinations;
           let directionsService = new google.maps.DirectionsService();
           let geocoder = new google.maps.Geocoder();
-          let GeoMarker;
           directionsDisplay = new google.maps.DirectionsRenderer();
+
 
           this.calculateDistances = (destination) => {
 
@@ -159,87 +158,96 @@
             directionsDisplay.setOptions({
               suppressMarkers: true
             });
-            setMarker(position, map)
+            setMarker(position)
 
           }
 
           //Mise en place du marker
           let setMarker = (position) => {
             origin = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            GeoMarker = new GeolocationMarker(this.map);
-            //let user = {}
+            let GeoMarker = new GeolocationMarker(this.map);
+
             this.user.lat = position.coords.latitude
             this.user.lng = position.coords.longitude
 
-            this.newPlace(this.user)
+            // J'envois la localisation des aidProvider à tous les aidReceivers
+            if (this.user.situation === "aidProvider") socket.emit('locationProvider', this.user)
+
           }
 
           let onError = (error) => {
             console.log("Could not get location");
           };
 
-          // Si il n'y pas eu d'acception il reçoit la localisation de tous
-
+          // Si il n'y pas eu d'acception l'AR reçoit la localisation de tous les AP
+          this.markers = []
           socket.on('show-marker', (data) => {
-            if (this.waiting) {
-              this.markers(data.newLocation)
-            } else {
-              if (data.id === this.aidProvider) {
-                this.markers(data.newLocation)
-                console.log(data.id)
-              }
-            }
+            if (!this.aidProvider)
+              updateMarker(data)
+            else
+              oneMarker(data)
           })
 
+          let updateMarker = (data) => {
+            let doctor = {}
+            let memory
+            console.log(data.id + data.newLocation)
+            this.markers.forEach((marker) => {
+              if (marker.id === data.id) {
+                memory = marker.marker
+              }
+            })
 
-          // Get current position
-          navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+            if (memory) {
+              memory.setPosition(new google.maps.LatLng(data.newLocation.lat, data.newLocation.lng))
+            } else {
+              let marker = new google.maps.Marker({
+                map: this.map,
+                icon: icon
+              });
+
+              doctor.marker = marker
+              doctor.id = data.id
+              doctor.lat = data.newLocation.lat
+              doctor.lng = data.newLocation.lng
+              this.markers.push(doctor)
+            }
+            console.log(this.markers)
+          }
+
+          let oneMarker = (data) => {
+            debugger
+            this.markers.forEach((marker) => {
+              if (marker.id === this.aidProvider)
+                marker.marker.setPosition(new google.maps.LatLng(data.newLocation.lat, data.newLocation.lng))
+              else {
+                marker.marker.setMap(null)
+                delete marker;
+              }
+            })
+          }
+
+
+
           // Reload marker when new postion detected
           navigator.geolocation.watchPosition(setMarker, onError, options);
+          // Get current position
+          navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
 
           // Recharge la position si erreure
           this.reload = () => {
             navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
           }
         },
-        newPlace(user) {
-          if (this.user.situation === "aidReceiver")
-            socket.emit('locationReceiver', user)
-          else {
-            socket.emit('locationProvider', user)
-          }
-        },
+
         // Create markers
         markers(newLocation) {
-          //Only the AIDREC can see the APRO. The APRO doesnt see AIDREC
-          if (this.user.situation === "aidReceiver") {
-            if (!this.waiting) {
-              this.marker.setMap(null);
-             }
+          marker.setPosition(new google.maps.LatLng(newLocation.lat, newLocation.lng))
 
-            let latLng = new google.maps.LatLng(newLocation.lat, newLocation.lng);
-            let icon = {
-              url: 'img/rescue.png',
-              scaledSize: new google.maps.Size(20, 20)
-            }
-
-            this.marker = new google.maps.Marker({
-              position: latLng,
-              icon: icon
-            });
-
-            markers.push(this.marker)
-
-            this.marker.setMap(this.map);
-            // I declare It to close the InfoWindow when I click on an other marker
-            this.infoWindow = new google.maps.InfoWindow();
-
-          }
-
+          // I declare It to close the InfoWindow when I click on an other marker
+          this.infoWindow = new google.maps.InfoWindow();
         },
-        deleteMarker() {
-          this.marker.setMap(null);
-        },
+
         // Set infoWindows of markers
         windows(marker, user) {
           // Enregistrement de la position du marker

@@ -12,13 +12,17 @@
       //});
       let socket = io(apiConfig.baseUrl + '/iller');
 
+      usersService.getCurrent().then((res)=>{
+        this.user = res
+      })
+
+
       this.logout = () => {
-        socket.emit('disconnect me')
-        
         usersService.disconnect().then((res)=>{
           $state.go('app.login')
           $state.reload()
         })
+          socket.emit('disconnect me')
       }
     }]
   })

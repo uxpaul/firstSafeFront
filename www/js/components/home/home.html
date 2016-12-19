@@ -3,13 +3,13 @@
     <ion-content scroll="false">
       <div id="map" data-tap-disabled="true"></div>
       <div ng-if="$ctrl.show">
-        <button class="button button-assertive floating-button" ng-click="show()">  HELP </button>
+        <button class="floating-buttonH" ng-click="show()">  HELP </button>
       </div>
-      <button class="button button-balanced floating-button" ng-if="$ctrl.doctor" ng-click="$ctrl.curred()"> Curred </button>
+      <button class="floating-buttonC" ng-if="$ctrl.doctor" ng-click="$ctrl.curred()"> Curred </button>
 
-      <button class="button button-positive floating-button" ng-if="$ctrl.reply" ng-click="$ctrl.accept()"> Accept</button>
-      <button class="button button-primary refuse-button" ng-if="$ctrl.reply" ng-click="$ctrl.refuse()"> Refuse</button>
-      <button class="button button-balanced floating-button" ng-if="$ctrl.state" ng-click="$ctrl.endMission()"> Saved</button>
+      <button class="floating-buttonA" ng-if="$ctrl.reply" ng-click="$ctrl.accept()"> Accept</button>
+      <button class="floating-buttonR" ng-if="$ctrl.reply" ng-click="$ctrl.refuse()"> Refuse</button>
+      <button class="floating-buttonC" ng-if="$ctrl.state" ng-click="$ctrl.endMission()"> Saved</button>
       <div class="floating-text" ng-if="$ctrl.doctor">
         <p><b><em>{{$ctrl.doctor.prenom}} {{$ctrl.doctor.nom}}</em> accept your help
         </b>and is coming from : <br>{{$ctrl.place.address}}<br>

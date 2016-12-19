@@ -1,15 +1,11 @@
-.item .col,
-.item .row {
-  padding: 0;
-}
-
 .settingsInput::-webkit-.settingsInput-placeholder {
-  font-family: 'roboto', sans-serif;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
+
 .settingsInput::-webkit-.settingsInput-placeholder:focus {
-display: none;
+  display: none;
+  color: rgb(127,219,255);
 }
 
 .settingsInput {
@@ -24,7 +20,7 @@ display: none;
   background-position: -200px 0;
   background-size: 200px 100%;
   background-repeat: no-repeat;
-  color: #0e6252;
+  color: rgb(0,73,102);
 }
 
 .settingsInput:focus,
@@ -32,6 +28,7 @@ display: none;
   box-shadow: none;
   outline: none;
   background-position: 0 0;
+  color: rgb(0,73,102);
 }
 
 .settingsInput:focus::-webkit-.settingsInput-placeholder,
@@ -43,8 +40,11 @@ display: none;
   visibility: visible !important;
 }
 
-.settings {
-  display: block;
-  text-align: center;
-  margin: 2em;
+.params {
+  color: rgb(0,73,102);
+  background-color: rgb(127,219,255);
+}
+
+#params i {
+  color: rgb(127,219,255);
 }

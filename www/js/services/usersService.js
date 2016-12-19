@@ -1,6 +1,6 @@
 ((app) => {
   'use strict'
-  app.service('usersService', ['$http', 'apiConfig', '$cookies','$window','$q',function($http, apiConfig, $cookies, $window, $q) {
+  app.service('usersService', ['$http', 'apiConfig', '$cookies', '$window', '$q', function($http, apiConfig, $cookies, $window, $q) {
     return {
       get() {
         return $http.get(apiConfig.baseUrl + '/api/users')
@@ -20,12 +20,14 @@
       delete(selectedUser) {
         return $http.delete(apiConfig.baseUrl + '/api/users/' + selectedUser._id)
       },
+
       connect(data) {
-        return $http.post(apiConfig.baseUrl  + '/api/admin', data).then((res) => {
+        return $http.post(apiConfig.baseUrl + '/api/admin', data).then((res) => {
           this.currentUser = res.data.user
           $cookies.put('token', res.data.token)
         })
       },
+
       disconnect() {
         return new Promise((resolve, reject) => {
           $cookies.remove("token")
@@ -33,8 +35,8 @@
           resolve()
         })
       },
-      getCurrent() {
 
+      getCurrent() {
         let deferred = $q.defer()
         if (!$cookies.get('token')) {
           deferred.reject()

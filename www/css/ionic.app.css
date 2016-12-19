@@ -9840,24 +9840,57 @@ h2 {
 #margin {
   padding-top: 3em; }
 
-#logo {
-  max-height: 40px;
-  position: fixed;
-  z-index: 10;
-  background-image: url("/img/sharker.png");
-  background-position: center;
-  height: 40px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  width: 100%;
-  margin: -5px; }
-
-.floating-button {
+.floating-buttonA {
   position: absolute;
   top: 10px;
   z-index: 5;
-  margin: 83vh 25vh;
-  font-family: 'Roboto','sans-serif'; }
+  margin: 83vh 5em;
+  text-align: center;
+  overflow: hidden;
+  border-width: 0;
+  outline: none;
+  background-color: #1FBD8B;
+  color: #ecf0f1;
+  padding: 0.9em 2em; }
+
+.floating-buttonH {
+  position: absolute;
+  top: 10px;
+  z-index: 5;
+  margin: 83vh 10em;
+  text-align: center;
+  overflow: hidden;
+  border-width: 0;
+  outline: none;
+  background-color: #c73b36;
+  color: #ecf0f1;
+  padding: 0.9em 2em; }
+
+.floating-buttonC {
+  position: absolute;
+  top: 10px;
+  z-index: 5;
+  margin: 83vh 10em;
+  text-align: center;
+  overflow: hidden;
+  border-width: 0;
+  outline: none;
+  background-color: #1FBD8B;
+  color: #ecf0f1;
+  padding: 0.9em 2em; }
+
+.floating-buttonR {
+  position: absolute;
+  top: 10px;
+  z-index: 5;
+  margin: 83vh 14em;
+  text-align: center;
+  overflow: hidden;
+  border-width: 0;
+  outline: none;
+  background-color: #111111;
+  color: #ecf0f1;
+  padding: 0.9em 2em; }
 
 .refuse-button {
   position: absolute;
@@ -9878,18 +9911,16 @@ h2 {
   height: 10em;
   margin: auto 20px; }
 
-.menuImage {
-  width: 22em;
-  height: 15em;
-  height: auto;
-  position: fixed;
-  background-repeat: no-repeat;
-  background-position: center !important;
-  background-size: cover !important;
-  display: inline-block; }
-
 .imageMenu {
-  height: 10em; }
+  width: 11em;
+  height: 11em;
+  border-radius: 9em;
+  -webkit-border-radius: 9em;
+  -moz-border-radius: 9em;
+  background-repeat: no-repeat;
+  margin: 0.5em auto;
+  display: block;
+  background-size: contain; }
 
 .ion-ios-navigate {
   position: absolute;
@@ -9901,6 +9932,42 @@ h2 {
   top: 10px;
   margin: 83vh 1vh;
   color: #387EF5; }
+
+.labels {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  margin-top: -14px;
+  box-shadow: 0 0 0 4px #54BBBA;
+  border-radius: 50%;
+  -webkit-animation: marker_sonar 2s linear infinite;
+  animation: marker_sonar 2s linear infinite; }
+
+@-webkit-keyframes marker_sonar {
+  0% {
+    -webkit-transform: scale3d(0.5, 0.5, 0.5);
+    transform: scale3d(0.5, 0.5, 0.5);
+    opacity: 1; }
+  100%,
+  50% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+    opacity: 0; } }
+
+@keyframes marker_sonar {
+  0% {
+    -webkit-transform: scale3d(0.5, 0.5, 0.5);
+    transform: scale3d(0.5, 0.5, 0.5);
+    opacity: 1; }
+  100%,
+  50% {
+    -webkit-transform: scale3d(1, 1, 1);
+    transform: scale3d(1, 1, 1);
+    opacity: 0; } }
 
 #markermodal {
   background-color: #3d4d67; }
@@ -9961,9 +10028,6 @@ h2 {
   padding: 0;
   z-index: 999999999; }
 
-h1 {
-  text-align: center; }
-
 .loginInput::-webkit-.loginInput-placeholder {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
@@ -10002,9 +10066,6 @@ h1 {
   transform: translateY(-20px);
   visibility: visible !important; }
 
-.loginSignup {
-  margin: 2em; }
-
 .footerLogo {
   text-align: center;
   z-index: 10;
@@ -10013,13 +10074,11 @@ h1 {
   margin-top: 91vh; }
 
 .loginContainer {
-  margin-top: 4em;
-  margin-right: auto;
-  margin-left: auto; }
+  margin: 4em auto 0em auto; }
 
 ::-webkit-input-placeholder {
   /* WebKit, Blink, Edge */
-  color: #387ef5 !important; }
+  color: rgba(56, 126, 245, 0.5) !important; }
 
 :-moz-placeholder {
   /* Mozilla Firefox 4 to 18 */
@@ -10039,9 +10098,114 @@ h1 {
   background-color: #FFFFFF; }
 
 .footerLogin {
-  background-image: url("/img/firstSafe.png");
+  background-image: url("/css/img/firstSafe.png");
   background-size: cover;
   height: 22.19em;
   background-position: center;
   padding: 0;
   background-repeat: no-repeat; }
+
+/*Buttons styles */
+.btnLogin {
+  margin-left: auto;
+  margin-right: auto;
+  display: table; }
+
+.btn {
+  margin-top: 2em;
+  padding: 0;
+  overflow: hidden;
+  border-width: 0;
+  outline: none;
+  background-color: #2ecc71;
+  color: #ecf0f1;
+  transition: background-color 0.3s; }
+
+.btn:focus,
+.btn:hover {
+  background-color: #5264ae; }
+
+.btn > * {
+  position: relative; }
+
+.btn:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 0;
+  padding-top: 0;
+  border-radius: 100%;
+  background-color: rgba(236, 240, 241, 0.3);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); }
+
+.btn:active:before {
+  width: 120%;
+  padding-top: 120%;
+  transition: width 0.2s ease-out, padding-top 0.2s ease-out; }
+
+.btn.blue {
+  background-color: #5264ae;
+  padding: 11px 33px; }
+
+.btn.blue:focus,
+.btn.blue:hover {
+  background-color: #5264ae; }
+
+.btn.green span {
+  background-color: #2ecc71; }
+
+.btn.green span {
+  padding: 12px 10px; }
+
+.btn.green:focus,
+.btn.green:hover {
+  background-color: #2ecc71; }
+
+.settingsInput::-webkit-.settingsInput-placeholder {
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out; }
+
+.settingsInput::-webkit-.settingsInput-placeholder:focus {
+  display: none;
+  color: #7fdbff; }
+
+.settingsInput {
+  padding: 1em 0 2em !important;
+  border: none;
+  text-align: center;
+  border-bottom: solid 1px #387ef5;
+  -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #387ef5 4%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #387ef5 4%);
+  background-position: -200px 0;
+  background-size: 200px 100%;
+  background-repeat: no-repeat;
+  color: #004966; }
+
+.settingsInput:focus,
+.settingsInput:valid {
+  box-shadow: none;
+  outline: none;
+  background-position: 0 0;
+  color: #004966; }
+
+.settingsInput:focus::-webkit-.settingsInput-placeholder,
+.settingsInput:valid::-webkit-.settingsInput-placeholder {
+  color: #387ef5;
+  font-size: 11px;
+  -webkit-transform: translateY(-20px);
+  transform: translateY(-20px);
+  visibility: visible !important; }
+
+.params {
+  color: #004966;
+  background-color: #7fdbff; }
+
+#params i {
+  color: #7fdbff; }

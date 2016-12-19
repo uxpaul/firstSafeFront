@@ -1,8 +1,3 @@
-h1 {
-  text-align: center;
-
-}
-
 .loginInput::-webkit-.loginInput-placeholder {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
@@ -44,14 +39,8 @@ h1 {
   transform: translateY(-20px);
   visibility: visible !important;
 }
-
-.loginSignup {
-  // display: block;
-  // text-align: center;
-  margin: 2em;
-}
 // .splashScreen {
-//   //background-image: url('http://www.nexus5wallpapers.com/wp-content/uploads/Water%20Drops/Water%20Drops%20Nexus%205%20Wallpapers%20HD%2042.jpg');
+//   background-image: url('http://www.nexus5wallpapers.com/wp-content/uploads/Water%20Drops/Water%20Drops%20Nexus%205%20Wallpapers%20HD%2042.jpg');
 //   position: fixed;
 //   z-index: 10;
 //   background-position: center !important;
@@ -65,18 +54,15 @@ h1 {
   height: 44px;
   display: inline-block;
   margin-top: 91vh;
-  //: absolute;
 }
 
 .loginContainer {
-  margin-top: 4em;
-  margin-right: auto;
-  margin-left: auto;
+  margin: 4em auto 0em auto;
 }
 
 ::-webkit-input-placeholder {
   /* WebKit, Blink, Edge */
-  color: rgb(56, 126, 245) !important;
+  color: rgba(56, 126, 245, 0.5) !important;
 }
 
 :-moz-placeholder {
@@ -97,14 +83,87 @@ h1 {
 }
 
 .headerLogin {
-  background-color: #FFFFFF; //  background-image: url('/img/firstSafe.png');
+  background-color: #FFFFFF;
 }
 
 .footerLogin {
-  background-image: url('/img/firstSafe.png');
-  background-size: cover; //  width: 100%;
+  background-image: url('/css/img/firstSafe.png');
+  background-size: cover;
   height: 22.19em;
   background-position: center;
   padding: 0;
   background-repeat: no-repeat;
+}
+
+/*Buttons styles */
+.btnLogin {
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+}
+
+.btn {
+  margin-top: 2em;
+  padding: 0;
+  overflow: hidden;
+  border-width: 0;
+  outline: none; // border-radius: 2px;
+  //  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+  background-color: #2ecc71;
+  color: #ecf0f1;
+  transition: background-color 0.3s;
+}
+
+.btn:focus,
+.btn:hover {
+  background-color: rgb(82, 100, 174);
+}
+
+.btn > * {
+  position: relative;
+}
+
+.btn:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 0;
+  padding-top: 0;
+  border-radius: 100%;
+  background-color: rgba(236, 240, 241, .3);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.btn:active:before {
+  width: 120%;
+  padding-top: 120%;
+  transition: width 0.2s ease-out, padding-top 0.2s ease-out;
+}
+
+.btn.blue {
+  background-color: rgb(82, 100, 174);
+  padding: 11px 33px;
+}
+
+.btn.blue:focus,
+.btn.blue:hover {
+  background-color: rgb(82, 100, 174);
+}
+
+.btn.green span {
+  background-color: #2ecc71;
+}
+
+.btn.green span {
+  padding: 12px 10px;
+}
+
+.btn.green:focus,
+.btn.green:hover {
+  background-color: #2ecc71;
 }

@@ -1,39 +1,49 @@
-<ion-view title="Settings">
-  <ion-content title="Settings" has-header="true">
+<ion-view view-title="Settings">
+  <ion-content class="has-header params">
+    <div id="params">
+
       <div class="item item-icon-left">
         <span class="input-label"><i class="icon ion-person"></i></span>
-        <p ng-if="!$ctrl.editMode" type="text" ng-model="user.prenom" placeholder="Name"></p>
-        <input ng-if="$ctrl.editMode" type="text" ng-model="user.prenom" placeholder="Name">
+        <input ng-if="!$ctrl.editMode" type="text" ng-model="$ctrl.user.prenom" placeholder="Name">
+        <input ng-if="$ctrl.editMode" type="text" ng-model="$ctrl.user.prenom" placeholder="Name">
       </div>
+
       <div class="item item-icon-left">
         <span><i class="icon ion-ios-person"></i></span>
-        <p ng-if="!$ctrl.editMode" type="text" ng-model="user.nom" placeholder="Surname"></p>
-        <input ng-if="$ctrl.editMode" type="text" ng-model="user.nom" placeholder="Surname">
+        <input ng-if="!$ctrl.editMode" ng-model="$ctrl.user.nom" type="text" >
+        <input ng-if="$ctrl.editMode" type="text" ng-model="$ctrl.user.nom" placeholder="Surname">
       </div>
+
       <div class="item item-icon-left">
         <span><i class="icon ion-ios-telephone"></i></span>
-        <p ng-if="!$ctrl.editMode" type="tel" ng-model="user.tel"></p>
-        <input ng-if="$ctrl.editMode" type="tel" ng-model="user.tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" placeholder="Tel">
+        <input ng-if="!$ctrl.editMode" ng-model="$ctrl.user.tel" type="tel">
+        <!-- <p ng-if="!$ctrl.editMode" ng-model="$ctrl.user.tel"></p> -->
+        <input ng-if="$ctrl.editMode" type="tel" ng-model="$ctrl.user.tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" placeholder="Tel">
       </div>
+
       <div class="item item-icon-left">
         <span><i class="icon ion-email"></i></span>
-        <p ng-if="!$ctrl.editMode" type="email" ng-model="user.email"></p>
-        <input ng-if="$ctrl.editMode" type="email" ng-model="user.email" placeholder="Email">
-
+        <input ng-if="!$ctrl.editMode" ng-model="$ctrl.user.email" type="email">
+        <!-- <p ng-if="!$ctrl.editMode" ng-model="$ctrl.user.email"></p> -->
+        <input ng-if="$ctrl.editMode" type="email" ng-model="$ctrl.user.email" placeholder="Email">
       </div>
-      <div class="item item-icon-left">
-        <span><i class="icon ion-lock-combination"></i></span>
-        <p ng-if="!$ctrl.editMode" type="password" ng-model="user.password"></p>
-        <input ng-if="$ctrl.editMode" type="password" ng-model="user.password" placeholder="Password">
 
+      <div class="item item-icon-left"  ng-if="$ctrl.editMode">
+        <span><i class="icon ion-lock-combination"></i></span>
+        <input type="password" ng-model="$ctrl.user.password" placeholder="Password">
       </div>
 
       <div class="row">
         <div class="col text-center">
-          <button class="button button-outline button-balanced" ng-click="$ctrl.edit()">
+          <button class="button button-outline button-positive" ng-click="$ctrl.edit($ctrl.user)">
            {{!$ctrl.editMode ? 'Edit' : 'Valid'}}
         </button>
+          <button ng-if="$ctrl.editMode" class="button button-outline button-assertive" ng-click="$ctrl.cancel($ctrl.user)">
+          Cancel
+      </button>
         </div>
       </div>
-    </ion-content>
-  </ion-view>
+
+    </div>
+  </ion-content>
+</ion-view>
