@@ -5,7 +5,7 @@
       url:'/login',
       views: {
         'menuContent': {
-         template:'<login></login>',
+         template:'<login></login>'
         //templateUrl: 'js/components/login/login.html'
 
         }

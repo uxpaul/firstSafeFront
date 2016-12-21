@@ -1,3 +1,21 @@
+.bar.bar-header {
+  background: rgba(255,255,255,0);
+  border-bottom-width: 0;
+}
+
+.bar.bar-header h1 {
+  color: black !important;
+}
+
+
+.scroll-content {
+  overflow: visible !important;
+}
+
+.platform-ios.platform-cordova:not(.fullscreen) .has-header {
+  top:0px;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
@@ -108,16 +126,6 @@ h2 {
   height: 10em;
   margin: auto 20px;
 }
-// .menuImage {
-//   width: 22em;
-//   height: 15em;
-//   height: auto;
-//   position: fixed;
-//   background-repeat: no-repeat;
-//   background-position: center !important;
-//   background-size: cover !important;
-//   display: inline-block;
-// }
 
 .imageMenu {
   width: 11em;

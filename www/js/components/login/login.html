@@ -1,6 +1,5 @@
-<!-- hide-nav-bar="true" -->
-<ion-view view-title="FirstSafe" class="splashScreen">
-  <ion-content class="has-header">
+<ion-view class="splashScreen" hide-nav-bar="true">
+  <ion-content class="has-header" overflow-scroll="true">
     <div class="headerLogin">
       <div class="row">
         <div class="loginContainer">
@@ -14,7 +13,7 @@
           <!-- <button class="button button-outline button-positive" type="submit" ng-click="$ctrl.doLogin()">Sign in</button> -->
           <button class="btn blue" type="button" ng-click="$ctrl.doLogin()"><span>Sign in</span></button>
           <!-- <button class="button button-outline button-balanced" type="submit" ng-click="$ctrl.signup()">Create account</button> -->
-          <button class="btn green" type="submit" ng-click="$ctrl.signup()"><span>Create account</span></button>
+          <button class="btn green" type="submit" ng-click="$ctrl.signup()"><span class="account">No account ?</span><br><span>Create account</span></button>
         </div>
       </div>
     </div>

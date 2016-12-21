@@ -2,7 +2,7 @@
 
   app.component('home', {
     templateUrl: 'js/components/home/home.html',
-    controller: ["aidReceiversService", "usersService", "$compile", "$scope", "apiConfig", "$ionicActionSheet", "$ionicPopup", '$timeout', function(aidReceiversService, usersService, $compile, $scope, apiConfig, $ionicActionSheet, $ionicPopup, $timeout) {
+    controller: ["aidReceiversService", "usersService", "$timeout", "$compile", "$scope", "apiConfig", "$ionicActionSheet", "$ionicPopup", '$timeout', function(aidReceiversService, usersService, $timeout, $compile, $scope, apiConfig, $ionicActionSheet, $ionicPopup) {
 
       let socket = io(apiConfig.baseUrl + '/iller');
       let icon = {
@@ -23,17 +23,26 @@
 
       socket.on('stats', (data) => console.log('Connected clients:', data.numClients))
 
+      socket.on('show-marker', (data) => {
+        if (!this.aidProvider)
+          this.updateMarker(data)
+        else
+          this.oneMarker(data)
+      })
+
       // Uniquement le(s) medecin(s) reçoit le(s) message(s) de(s) aidReceivers
       socket.on('emergency', (message) => {
-          message.user.lat
-          message.user.lng
-          this.emergency(message)
-          this.calculateDistances(message.user)
+        message.user.lat
+        message.user.lng
+        this.emergency(message)
+        this.calculateDistances(message.user)
 
-        })
-        // A la confirmation du medecin ...
+      })
+
+      socket.on('iAccept', () => this.iAccept())
+
+      // A la confirmation du medecin ...
       socket.on('accept', (aidProvider) => {
-        socket.emit('acceptation')
         this.show = false
         aidProvider.user.lng
         aidProvider.user.lat
@@ -41,12 +50,6 @@
         console.log("aidProvider qui a accepté" + this.aidProvider)
         this.acceptHelp(aidProvider)
         this.calculateDistances(aidProvider.user)
-      })
-      console.log(this.aidProvider);
-
-      socket.on('disconnect', (socketid) => {
-        console.log(socketid)
-        //    this.deleteMarker()
       })
 
       $scope.show = () => {
@@ -83,9 +86,12 @@
 
       };
       let directionsDisplay;
+      let timer;
 
       angular.extend(this, {
         $onInit() {
+
+          this.markers = []
 
 
 
@@ -166,68 +172,23 @@
           let setMarker = (position) => {
             origin = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             let GeoMarker = new GeolocationMarker(this.map);
-
             this.user.lat = position.coords.latitude
             this.user.lng = position.coords.longitude
-
-            // J'envois la localisation des aidProvider à tous les aidReceivers
+              // J'envois la localisation des aidProvider à tous les aidReceivers
             if (this.user.situation === "aidProvider") socket.emit('locationProvider', this.user)
 
+            let locReload = () => {
+              timer = $timeout(() => {
+                if (this.user.situation === "aidProvider") socket.emit('locationProvider', this.user)
+                timer = $timeout(locReload, 2000);
+              }, 2000);
+            };
+            locReload();
           }
 
           let onError = (error) => {
             console.log("Could not get location");
           };
-
-          // Si il n'y pas eu d'acception l'AR reçoit la localisation de tous les AP
-          this.markers = []
-          socket.on('show-marker', (data) => {
-            if (!this.aidProvider)
-              updateMarker(data)
-            else
-              oneMarker(data)
-          })
-
-          let updateMarker = (data) => {
-            let doctor = {}
-            let memory
-            console.log(data.id + data.newLocation)
-            this.markers.forEach((marker) => {
-              if (marker.id === data.id) {
-                memory = marker.marker
-              }
-            })
-
-            if (memory) {
-              memory.setPosition(new google.maps.LatLng(data.newLocation.lat, data.newLocation.lng))
-            } else {
-              let marker = new google.maps.Marker({
-                map: this.map,
-                icon: icon
-              });
-
-              doctor.marker = marker
-              doctor.id = data.id
-              doctor.lat = data.newLocation.lat
-              doctor.lng = data.newLocation.lng
-              this.markers.push(doctor)
-            }
-            console.log(this.markers)
-          }
-
-          let oneMarker = (data) => {
-            debugger
-            this.markers.forEach((marker) => {
-              if (marker.id === this.aidProvider)
-                marker.marker.setPosition(new google.maps.LatLng(data.newLocation.lat, data.newLocation.lng))
-              else {
-                marker.marker.setMap(null)
-                delete marker;
-              }
-            })
-          }
-
-
 
           // Reload marker when new postion detected
           navigator.geolocation.watchPosition(setMarker, onError, options);
@@ -236,8 +197,48 @@
 
           // Recharge la position si erreure
           this.reload = () => {
+            navigator.geolocation.watchPosition(setMarker, onError, options);
             navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
           }
+        },
+        //AR reçoit la localisation de tous les AP
+        updateMarker(data) {
+          let doctor = {}
+          let memory
+          console.log(data.id + data.newLocation)
+          this.markers.forEach((marker) => {
+            if (marker.id === data.id) {
+              memory = marker.marker
+            }
+          })
+
+          if (memory) {
+            memory.setPosition(new google.maps.LatLng(data.newLocation.lat, data.newLocation.lng))
+          } else {
+            let marker = new google.maps.Marker({
+              map: this.map,
+              icon: icon
+            });
+
+            doctor.marker = marker
+            doctor.id = data.id
+            doctor.lat = data.newLocation.lat
+            doctor.lng = data.newLocation.lng
+            this.markers.push(doctor)
+          }
+          console.log(this.markers)
+        },
+
+        oneMarker(data) {
+          this.markers.forEach((marker) => {
+            if (marker.id != this.aidProvider) {
+              marker.marker.setMap(null)
+              delete marker;
+            } else {
+              if (data.id === this.aidProvider)
+                marker.marker.setPosition(new google.maps.LatLng(data.newLocation.lat, data.newLocation.lng))
+            }
+          })
         },
 
         // Create markers
@@ -307,16 +308,27 @@
           });
         },
 
+        // Refus de l'aidProvider -- Retire tous les messages
         refuse() {
           this.reply = false;
-          this.show = false;
+          this.content = null;
+          directionsDisplay.setMap()
         },
 
-        // ... Je reçoit ses coordonnées
+        // ... Je reçois ses coordonnées
         acceptHelp(user) {
           $scope.$apply(() => {
             this.doctor = user.user
           });
+        },
+
+        // Quand un aidProvider accepte l'alerte disparaît chez les autres aidProvider
+        iAccept() {
+          $scope.$apply(() => {
+            this.reply = false;
+            this.content = null;
+            directionsDisplay.setMap()
+          })
         },
 
         endMission() {
@@ -324,13 +336,12 @@
           this.state = false;
           this.content = false;
           directionsDisplay.setMap();
-          this.init()
         },
 
         curred() {
           this.doctor = false
+          this.show = true;
           directionsDisplay.setMap();
-          this.init()
         }
 
       })

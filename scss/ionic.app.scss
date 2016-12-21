@@ -27,9 +27,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 @import "home/home";
 //includes homemodal style
 @import "home/homemodal";
-//includes signup style
-@import "signup/signup";
 //includes login style
 @import "signup/login";
+//includes signup style
+@import "signup/signup";
 //includes settings style
 @import "settings/settings"

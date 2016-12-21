@@ -9815,6 +9815,19 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+.bar.bar-header {
+  background: rgba(255, 255, 255, 0);
+  border-bottom-width: 0; }
+
+.bar.bar-header h1 {
+  color: black !important; }
+
+.scroll-content {
+  overflow: visible !important; }
+
+.platform-ios.platform-cordova:not(.fullscreen) .has-header {
+  top: 0px; }
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
 
@@ -9975,59 +9988,6 @@ h2 {
 #markermodal button {
   margin: 5px 0; }
 
-.item .col,
-.item .row {
-  padding: 0; }
-
-.signupInput::-webkit-.signupInput-placeholder {
-  font-family: 'roboto', sans-serif;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out; }
-
-.signupInput::-webkit-.signupInput-placeholder:focus {
-  display: none; }
-
-.signupInput {
-  padding: 1em 0 2em !important;
-  border: none;
-  text-align: center;
-  border-bottom: solid 1px #387ef5;
-  -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-  transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
-  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #387ef5 4%);
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #387ef5 4%);
-  background-position: -200px 0;
-  background-size: 200px 100%;
-  background-repeat: no-repeat;
-  color: #0e6252; }
-
-.signupInput:focus,
-.signupInput:valid {
-  box-shadow: none;
-  outline: none;
-  background-position: 0 0; }
-
-.signupInput:focus::-webkit-.signupInput-placeholder,
-.signupInput:valid::-webkit-.signupInput-placeholder {
-  color: #387ef5;
-  font-size: 11px;
-  -webkit-transform: translateY(-20px);
-  transform: translateY(-20px);
-  visibility: visible !important; }
-
-.signup {
-  display: block;
-  text-align: center;
-  margin: 2em; }
-
-.footerSignup {
-  background-image: url("/img/firstSafe.png");
-  background-size: contain;
-  height: 23.2em;
-  background-position: center;
-  padding: 0;
-  z-index: 999999999; }
-
 .loginInput::-webkit-.loginInput-placeholder {
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
@@ -10074,7 +10034,7 @@ h2 {
   margin-top: 91vh; }
 
 .loginContainer {
-  margin: 4em auto 0em auto; }
+  margin: 4em auto 0; }
 
 ::-webkit-input-placeholder {
   /* WebKit, Blink, Edge */
@@ -10098,9 +10058,9 @@ h2 {
   background-color: #FFFFFF; }
 
 .footerLogin {
-  background-image: url("/css/img/firstSafe.png");
-  background-size: cover;
-  height: 22.19em;
+  background-image: url("img/firstSafe.png");
+  background-size: contain;
+  height: 30.33em;
   background-position: center;
   padding: 0;
   background-repeat: no-repeat; }
@@ -10149,7 +10109,7 @@ h2 {
   transition: width 0.2s ease-out, padding-top 0.2s ease-out; }
 
 .btn.blue {
-  background-color: #5264ae;
+  background-color: #387EF5;
   padding: 11px 33px; }
 
 .btn.blue:focus,
@@ -10157,14 +10117,67 @@ h2 {
   background-color: #5264ae; }
 
 .btn.green span {
-  background-color: #2ecc71; }
-
-.btn.green span {
   padding: 12px 10px; }
 
 .btn.green:focus,
 .btn.green:hover {
   background-color: #2ecc71; }
+
+.account {
+  font-size: 6px; }
+
+.item .col,
+.item .row {
+  padding: 0; }
+
+.signupInput::-webkit-.signupInput-placeholder {
+  font-family: 'roboto', sans-serif;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out; }
+
+.signupInput::-webkit-.signupInput-placeholder:focus {
+  display: none; }
+
+.signupInput {
+  padding: 1em 0 2em !important;
+  border: none;
+  text-align: center;
+  border-bottom: solid 1px #387ef5;
+  -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 96%, #387ef5 4%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 96%, #387ef5 4%);
+  background-position: -200px 0;
+  background-size: 200px 100%;
+  background-repeat: no-repeat;
+  color: #0e6252; }
+
+.signupInput:focus,
+.signupInput:valid {
+  box-shadow: none;
+  outline: none;
+  background-position: 0 0; }
+
+.signupInput:focus::-webkit-.signupInput-placeholder,
+.signupInput:valid::-webkit-.signupInput-placeholder {
+  color: #387ef5;
+  font-size: 11px;
+  -webkit-transform: translateY(-20px);
+  transform: translateY(-20px);
+  visibility: visible !important; }
+
+.signup {
+  display: block;
+  text-align: center;
+  margin: 2em; }
+
+.footerSignup {
+  background-image: url("img/firstSafe.png");
+  background-size: contain;
+  height: 23.2em;
+  background-position: center;
+  padding: 0;
+  z-index: 999999999; }
 
 .settingsInput::-webkit-.settingsInput-placeholder {
   -webkit-transition: all 0.3s ease-in-out;
