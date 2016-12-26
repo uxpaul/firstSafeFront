@@ -2,7 +2,7 @@
 
   app.component('login', {
     templateUrl: 'js/components/login/login.html',
-    controller: ["$ionicModal", "$scope", "$state", "usersService", "$ionicPopup", function($ionicModal, $scope, $state, usersService,$ionicPopup) {
+    controller: ["$ionicModal", "$scope", "$state", "usersService", function($ionicModal, $scope, $state, usersService) {
 
 
       this.closeSignup = false;

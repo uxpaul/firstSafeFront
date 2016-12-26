@@ -2,9 +2,8 @@
 
   app.component('home', {
     templateUrl: 'js/components/home/home.html',
-    controller: ["aidReceiversService", "usersService", "$timeout", "$compile", "$scope", "apiConfig", "$ionicActionSheet", "$ionicPopup", '$timeout', function(aidReceiversService, usersService, $timeout, $compile, $scope, apiConfig, $ionicActionSheet, $ionicPopup) {
+    controller: ["usersService","$timeout", "$compile", "$scope", "socket","$ionicActionSheet", "$ionicPopup", '$timeout', function(usersService, $timeout, $compile, $scope, socket, $ionicActionSheet, $ionicPopup) {
 
-      let socket = io(apiConfig.baseUrl + '/iller');
       let icon = {
         url: 'img/rescue.png',
         scaledSize: new google.maps.Size(20, 20)
@@ -272,12 +271,10 @@
 
         },
         address(address, span) {
-          $scope.$apply(() => {
             this.place = {
               address: address,
               time: span
             }
-          });
           console.log(this.place)
         },
 
@@ -289,12 +286,10 @@
 
         // Le message du malade reçu par le medecin
         emergency(message) {
-          $scope.$apply(() => {
             this.content = message.user
             this.id = message.id
             console.log(`aidReceiver's id : ${message.id}`)
             this.reply = true;
-          });
         },
 
         //L'aidProvider envoit ses infos à l'aidReceiver (Son socket id est aussi passé pour spécifier qu'on lui renvoit bien à lui)
@@ -317,18 +312,14 @@
 
         // ... Je reçois ses coordonnées
         acceptHelp(user) {
-          $scope.$apply(() => {
             this.doctor = user.user
-          });
         },
 
         // Quand un aidProvider accepte l'alerte disparaît chez les autres aidProvider
         iAccept() {
-          $scope.$apply(() => {
             this.reply = false;
             this.content = null;
             directionsDisplay.setMap()
-          })
         },
 
         endMission() {

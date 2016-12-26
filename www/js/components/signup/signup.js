@@ -2,12 +2,11 @@
 
   app.component('signup', {
     templateUrl: 'js/components/signup/signup.html',
-    controller: ["$stateParams", "$state", "$timeout", function($stateParams, $http, $state, $timeout) {
+    controller: ["$state", function($state) {
       angular.extend(this, {
         $onInit() {
 
           this.signupData = {};
-
 
         },
         // Perform the signup action when the user submits the signup form
@@ -17,7 +16,6 @@
           $state.go('app.home', {
             id: this.signupData.username
           })
-
         }
 
       })

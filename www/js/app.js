@@ -1,10 +1,9 @@
 ((app) => {
   app.constant('apiConfig', {
-  //baseUrl:'http://localhost:8000'
- baseUrl: 'https://firstsafe.herokuapp.com',
-  //baseUrl : 'https://savefirst.herokuapp.com'
-  })
-  .run(function($ionicPlatform) {
+      //baseUrl:'http://localhost:8000'
+      baseUrl: 'https://firstsafe.herokuapp.com',
+    })
+    .run(function($ionicPlatform) {
       $ionicPlatform.ready(function() {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)

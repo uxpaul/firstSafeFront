@@ -2,7 +2,7 @@
 
   app.component('settings', {
     templateUrl: 'js/components/settings/settings.html',
-    controller: ["usersService","$scope", function(usersService, $scope) {
+    controller: ["usersService", function(usersService) {
       angular.extend(this, {
         $onInit() {
 
